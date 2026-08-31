@@ -35,75 +35,111 @@ function getColor(number) {
 //spin the roulette
 
 function spin() {
+
     const bet = Number(betAmount.value);
     const choice = betChoice.value;
 
-
-    //check bet 
-
-    if(bet <= 0){
+    // Check bet
+    if (bet <= 0) {
         message.textContent = "Enter a valid bet.";
-        return; 
+        return;
     }
 
-    //check balance
-
-    if(bet > balance) {
+    // Check balance
+    if (bet > balance) {
         message.textContent = "Not enough balance.";
         return;
     }
 
-    //remove bet from balance
+    // Disable button while spinning
+    spinButton.disabled = true;
 
+    // Remove bet
     balance -= bet;
-
-    //generate random number from 0 to 36
-
-    const number = Math.floor(Math.random() * 37);
-
-    // get nummber color 
-
-    const color = getColor(number);
-
-    //Display result 
-
-    result.textContent = number;
-    wheel.className = "wheel " + color;
-
-    //Check if player won
-
-    if (choice === color) {
-        let winnings;
-
-        if(choice === "green"){
-            winnings = bet * 36;
-        }else{
-        //red and black pay 1:1
-        winnings = bet * 2; 
-        }
-
-        balance += winnings;
-
-        message.textContent = `You won + ${winnings - bet} $$$! 🎉`;
-        
-    } else {
-    //player lost
-        message.textContent = `You lost + ${bet}  $$$.`;
-    }
-
-    //Update balance 
-
     balanceText.textContent = balance;
 
-    //game over 
+    // Start animation
+    wheel.classList.add("rolling");
 
-    if (balance <= 0 ){
-        message.textContent += "Game over!";
+    message.textContent = "Spinning... 🎰";
 
-        spinButton.disabled = ture;
-    }
 
+    // Show random numbers for 2 seconds
+    const rolling = setInterval(() => {
+
+        const randomNumber = Math.floor(Math.random() * 37);
+
+        result.textContent = randomNumber;
+
+        const randomColor = getColor(randomNumber);
+
+        wheel.className = "wheel rolling " + randomColor;
+
+    }, 100);
+
+
+    // After 2 seconds
+    setTimeout(() => {
+
+        // Stop changing numbers
+        clearInterval(rolling);
+
+        // Generate FINAL result
+        const number = Math.floor(Math.random() * 37);
+
+        const color = getColor(number);
+
+
+        // Show final result
+        result.textContent = number;
+
+        wheel.className = "wheel " + color;
+
+
+        // Check win
+        if (choice === color) {
+
+            let winnings;
+
+            if (choice === "green") {
+                winnings = bet * 36;
+            } else {
+                winnings = bet * 2;
+            }
+
+            balance += winnings;
+
+            message.textContent =
+                `You won ${winnings - bet} $$$! 🎉`;
+
+        } else {
+
+            message.textContent =
+                `You lost ${bet} $$$. 😢`;
+        }
+
+
+        // Update balance
+        balanceText.textContent = balance;
+
+
+        // Game over
+        if (balance <= 0) {
+
+            message.textContent += " Game over!";
+
+            spinButton.disabled = true;
+
+        } else {
+
+            // Enable button again
+            spinButton.disabled = false;
+        }
+
+    }, 2000);
 }
+
+
 
 //button event 
 
