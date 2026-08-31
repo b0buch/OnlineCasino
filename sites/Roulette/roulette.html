@@ -3,43 +3,25 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-  <title>Simple Roulette</title>
-
+  <title>Roulette</title>
   <link rel="stylesheet" href="Styleroulette.css">
+  <link rel="icon" href="/img/logonobg.png" type="image/png">
 </head>
-
 <body>
-
   <div class="game">
-
     <h1>🎰 Roulette</h1>
-
     <div id="wheel" class="wheel">
       <span id="result">0</span>
     </div>
-
     <p class="balance">
       Balance: $<span id="balance">100</span>
     </p>
-
     <div class="controls">
-
-      <label for="betAmount">
-        Bet amount
-      </label>
-
-      <input
-        id="betAmount"
-        type="number"
-        min="1"
-        value="10"
-      >
-
+      <label for="betAmount">Bet amount</label>
+      <input id="betAmount" type="number" min="1" value="10">
       <label for="betChoice">
         Bet on
       </label>
-
       <select id="betChoice">
         <option value="red">Red</option>
         <option value="black">Black</option>
@@ -49,14 +31,9 @@
       <button id="spinButton">
         SPIN
       </button>
-
     </div>
-
     <p id="message"></p>
-
   </div>
-
   <script src="rouletteJS.js"></script>
-
 </body>
 </html>
