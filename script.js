@@ -1,1 +1,0 @@
-alert("Webseite ist +18");
