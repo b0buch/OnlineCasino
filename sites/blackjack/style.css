@@ -188,3 +188,54 @@ button:disabled {
   height: 30px; 
   margin-top: 10px; 
 }
+
+/* Header */
+header {
+ background: radial-gradient(circle, #A47BDB, #5A4377);
+
+}
+
+.header2 {
+
+    background-color: #774DAF;
+}
+
+/* Body */
+
+body {
+
+    background: linear-gradient(to bottom,  #57018E,  #200134);
+    background-repeat: no-repeat;
+}
+
+
+
+/* Text */
+
+h1 {
+    color: white;
+}
+
+
+button {
+
+    background: linear-gradient(#D36086, #690C8F);
+}
+
+
+/* footer */
+
+footer {
+    background: linear-gradient(#462F65, #24003A);
+}
+
+/* Noch zu erledigen:
+
+Benutzeroberfläche: #62428D
+
+    
+
+
+
+
+*/
