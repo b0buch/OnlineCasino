@@ -1,3 +1,14 @@
+
+
+
+
+
+
+
+
+
+
+
 /* Header */
 header {
  background: radial-gradient(circle, #A47BDB, #5A4377);
@@ -22,8 +33,11 @@ body {
 /* Text */
 
 h1 {
-    color: purple;
+    color: black;
+    font-family:"Irish Grover", cursive;
+    
 }
+
 
 
 button {
@@ -31,6 +45,12 @@ button {
     background: linear-gradient(#D36086, #690C8F);
 }
 
+
+a {
+    text-decoration: none;
+    color: black;
+
+}
 
 /* footer */
 
