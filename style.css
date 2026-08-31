@@ -1,3 +1,25 @@
+/* Header */
+header {
+ background: radial-gradient(circle, #A47BDB, #5A4377);
+
+}
+
+.header2 {
+
+    background-color: #774DAF;
+}
+
+/* Body */
+
+body {
+
+    background: linear-gradient(to bottom,  #57018E,  #200134);
+    background-repeat: no-repeat;
+}
+
+
+/* Text */
+
 h1 {
     color: purple;
 }
