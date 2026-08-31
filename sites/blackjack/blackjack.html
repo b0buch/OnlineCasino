@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Blackjack Classic</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<div class="game-container">
+  <h1>BLACKJACK</h1>
+
+  <div class="balance-container">
+    <div class="balance-box">Guthaben: <span id="balance">100</span>€</div>
+    <div class="balance-box">Einsatz: <span id="current-bet-display">10</span>€</div>
+  </div>
+
+  <div class="area">
+    <h2>Dealer (<span id="dealer-score">0</span>)</h2>
+    <div id="dealer-cards" class="cards"></div>
+  </div>
+
+  <div class="area">
+    <h2>Spieler (<span id="player-score">0</span>)</h2>
+    <div id="player-cards" class="cards"></div>
+  </div>
+
+  <!-- Wettsystem-Steuerung -->
+  <div id="betting-controls" class="betting-area">
+    <label for="bet-input">Einsatz wählen:</label>
+    <div class="bet-buttons">
+      <button onclick="setBet(10)">+10€</button>
+      <button onclick="setBet(25)">+25€</button>
+      <button onclick="setBet(50)">+50€</button>
+      <button onclick="resetBet()" class="btn-danger">Zurücksetzen</button>
+    </div>
+    <input type="number" id="bet-input" value="10" min="1">
+    <button id="start-btn" onclick="startGame()" class="btn-start">Runde Starten</button>
+  </div>
+
+  <!-- Spiel-Steuerung -->
+  <div class="controls">
+    <button id="hit-btn" onclick="hit()" disabled>Karte Ziehen</button>
+    <button id="stand-btn" onclick="stand()" disabled>Halten</button>
+  </div>
+
+  <div id="message"></div>
+</div>
+
+<script src="script.js"></script>
+</body>
+</html>
