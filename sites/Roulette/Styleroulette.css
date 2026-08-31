@@ -1,0 +1,130 @@
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  min-height: 100vh;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  background: #111;
+  color: white;
+
+  font-family: Arial, sans-serif;
+}
+
+.game {
+  width: 350px;
+  padding: 25px;
+
+  text-align: center;
+
+  background: #222;
+  border-radius: 15px;
+
+  box-shadow: 0 10px 30px black;
+}
+
+h1 {
+  margin-top: 0;
+}
+
+/* Roulette wheel */
+
+.wheel {
+  width: 180px;
+  height: 180px;
+
+  margin: 20px auto;
+
+  border-radius: 50%;
+  border: 10px solid #333;
+
+  background: green;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  font-size: 45px;
+  font-weight: bold;
+}
+
+.wheel.red {
+  background: #d40000;
+}
+
+.wheel.black {
+  background: #000;
+}
+
+.wheel.green {
+  background: #008000;
+}
+
+/* Balance */
+
+.balance {
+  font-size: 20px;
+}
+
+/* Controls */
+
+.controls {
+  display: flex;
+  flex-direction: column;
+
+  gap: 10px;
+}
+
+input,
+select,
+button {
+  width: 100%;
+
+  padding: 12px;
+
+  border: none;
+  border-radius: 8px;
+
+  font-size: 16px;
+}
+
+input,
+select {
+  background: white;
+  color: black;
+}
+
+button {
+  margin-top: 10px;
+
+  background: #e0a800;
+  color: #111;
+
+  font-weight: bold;
+
+  cursor: pointer;
+}
+
+button:hover {
+  background: #ffc107;
+}
+
+button:disabled {
+  background: #555;
+  cursor: not-allowed;
+}
+
+/* Result message */
+
+#message {
+  min-height: 24px;
+
+  margin-top: 15px;
+
+  font-weight: bold;
+}
