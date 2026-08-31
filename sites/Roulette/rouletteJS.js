@@ -88,7 +88,7 @@ function spin() {
         
     } else {
     //player lost
-        message.textContent = `You lost + ${bet}  $$$.`;
+        message.textContent = `You lost ${bet}  $$$.`;
     }
 
     //Update balance 
