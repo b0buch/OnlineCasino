@@ -128,3 +128,17 @@ button:disabled {
 
   font-weight: bold;
 }
+
+.rolling {
+    animation: pulse 0.15s infinite alternate;
+}
+
+@keyframes pulse {
+    from {
+        transform: scale(1);
+    }
+
+    to {
+        transform: scale(1.08);
+    }
+}
