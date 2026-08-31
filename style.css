@@ -1,3 +1,69 @@
-h1 {
-    color: purple;
+
+
+
+
+
+
+
+
+
+
+
+/* Header */
+header {
+ background: radial-gradient(circle, #A47BDB, #5A4377);
+
 }
+
+.header2 {
+
+    background-color: #774DAF;
+}
+
+/* Body */
+
+body {
+
+    background: linear-gradient(to bottom,  #57018E,  #200134);
+    background-repeat: no-repeat;
+}
+
+
+
+/* Text */
+
+h1 {
+    color: black;
+    font-family:"Irish Grover", cursive;
+    
+}
+
+
+
+button {
+
+    background: linear-gradient(#D36086, #690C8F);
+}
+
+
+a {
+    text-decoration: none;
+    color: black;
+
+}
+
+/* footer */
+
+footer {
+    background: linear-gradient(#462F65, #24003A);
+}
+
+/* Noch zu erledigen:
+
+Benutzeroberfläche: #62428D
+
+
+
+
+
+*/
