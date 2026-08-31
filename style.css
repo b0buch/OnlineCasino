@@ -40,11 +40,26 @@ h1 {
 
 
 
-button {
+
+img {
+    
+    height: 2em;
+    width: 4em;
+    float: right;
+}
+
+
+.spielbuttom {
 
     background: linear-gradient(#D36086, #690C8F);
 }
 
+
+.infobutton {
+    background-color: #8060AB;
+    border-color: none;
+width: 30em;
+}
 
 a {
     text-decoration: none;
@@ -58,6 +73,15 @@ footer {
     background: linear-gradient(#462F65, #24003A);
 }
 
+
+
+
+
+h2 {
+
+    border-color: black;
+    
+}
 /* Noch zu erledigen:
 
 Benutzeroberfläche: #62428D
