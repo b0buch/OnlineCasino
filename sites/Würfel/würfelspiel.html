@@ -1,3 +1,4 @@
+```html
 <!DOCTYPE html>
 <html lang="de">
 <head>
@@ -6,7 +7,6 @@
 
     <title>Würfelspiel</title>
 
-    <!-- Dein eigenes CSS -->
     <link rel="stylesheet" href="style.css">
 </head>
 
@@ -16,28 +16,51 @@
 
         <header class="game-header">
             <h1>🎲 Würfelspiel</h1>
+
             <div class="balance">
-                Guthaben: <span id="balance">1000</span> Coins
+                Guthaben:
+                <span id="balance">1000</span>
+                Coins
             </div>
         </header>
 
+
         <section class="game-card">
 
+            <!-- WÜRFEL -->
             <div class="dice-container">
-                <div class="die" id="die1">⚀</div>
-                <div class="die" id="die2">⚀</div>
+
+                <div class="die" id="die1">
+                    ⚀
+                </div>
+
+                <div class="die" id="die2">
+                    ⚀
+                </div>
+
             </div>
 
+
+            <!-- ERGEBNIS -->
             <div class="result" id="result">
                 Setze deinen Einsatz und würfle!
             </div>
 
+
+            <!-- EINSATZ -->
             <div class="bet-section">
 
-                <label for="bet">Einsatz</label>
+                <label for="bet">
+                    Einsatz
+                </label>
 
                 <div class="bet-controls">
-                    <button type="button" id="minusBet">−</button>
+
+                    <button
+                        type="button"
+                        id="minusBet">
+                        −
+                    </button>
 
                     <input
                         type="number"
@@ -47,22 +70,58 @@
                         step="1"
                     >
 
-                    <button type="button" id="plusBet">+</button>
+                    <button
+                        type="button"
+                        id="plusBet">
+                        +
+                    </button>
+
                 </div>
 
+
                 <div class="quick-bets">
-                    <button type="button" data-bet="10">10</button>
-                    <button type="button" data-bet="25">25</button>
-                    <button type="button" data-bet="50">50</button>
-                    <button type="button" data-bet="100">100</button>
+
+                    <button
+                        type="button"
+                        data-bet="10">
+                        10
+                    </button>
+
+                    <button
+                        type="button"
+                        data-bet="25">
+                        25
+                    </button>
+
+                    <button
+                        type="button"
+                        data-bet="50">
+                        50
+                    </button>
+
+                    <button
+                        type="button"
+                        data-bet="100">
+                        100
+                    </button>
+
                 </div>
 
             </div>
 
-            <button type="button" id="rollButton" class="roll-button">
+
+            <!-- WÜRFELN -->
+            <button
+                type="button"
+                id="rollButton"
+                class="roll-button">
+
                 🎲 WÜRFELN
+
             </button>
 
+
+            <!-- STATISTIK -->
             <div class="stats">
 
                 <div class="stat">
@@ -84,6 +143,8 @@
 
         </section>
 
+
+        <!-- REGELN -->
         <section class="rules">
 
             <h2>Spielregeln</h2>
@@ -93,24 +154,29 @@
             </p>
 
             <p>
-                ⭐ Bei einer Summe von <strong>7</strong> erhältst du das
-                <strong>2-fache</strong> deines Einsatzes als Gewinn.
+                ⭐ Eine Summe von <strong>7</strong>
+                gibt das <strong>2-fache</strong>.
             </p>
 
             <p>
-                🔥 Bei einem Pasch erhältst du das
-                <strong>3-fache</strong> deines Einsatzes als Gewinn.
+                🔥 Ein Pasch gibt das
+                <strong>3-fache</strong>.
             </p>
 
             <p>
-                💀 Bei allen anderen Ergebnissen verlierst du deinen Einsatz.
+                💀 Bei allen anderen Ergebnissen
+                verlierst du deinen Einsatz.
             </p>
 
         </section>
 
     </main>
 
+
     <script src="script.js"></script>
 
 </body>
 </html>
+```
+
+Für eine **richtig sichtbare Würfelanimation** muss jetzt dein `script.js` beim Würfeln die Klasse z. B. `rolling` setzen. Dein bisheriges JS animiert die Würfel bereits durch schnelles Wechseln der Augenzahlen. Wenn du willst, kann ich dir als Nächstes eine **richtig coole 3D-Würfelanimation mit Drehung und anschließendem Ergebnis** in `script.js` + CSS einbauen.
