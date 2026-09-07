@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Würfelspiel</title>
+
+    <!-- Dein eigenes CSS -->
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+    <main class="game-container">
+
+        <header class="game-header">
+            <h1>🎲 Würfelspiel</h1>
+            <div class="balance">
+                Guthaben: <span id="balance">1000</span> Coins
+            </div>
+        </header>
+
+        <section class="game-card">
+
+            <div class="dice-container">
+                <div class="die" id="die1">⚀</div>
+                <div class="die" id="die2">⚀</div>
+            </div>
+
+            <div class="result" id="result">
+                Setze deinen Einsatz und würfle!
+            </div>
+
+            <div class="bet-section">
+
+                <label for="bet">Einsatz</label>
+
+                <div class="bet-controls">
+                    <button type="button" id="minusBet">−</button>
+
+                    <input
+                        type="number"
+                        id="bet"
+                        value="10"
+                        min="1"
+                        step="1"
+                    >
+
+                    <button type="button" id="plusBet">+</button>
+                </div>
+
+                <div class="quick-bets">
+                    <button type="button" data-bet="10">10</button>
+                    <button type="button" data-bet="25">25</button>
+                    <button type="button" data-bet="50">50</button>
+                    <button type="button" data-bet="100">100</button>
+                </div>
+
+            </div>
+
+            <button type="button" id="rollButton" class="roll-button">
+                🎲 WÜRFELN
+            </button>
+
+            <div class="stats">
+
+                <div class="stat">
+                    <span>Gewonnen</span>
+                    <strong id="wins">0</strong>
+                </div>
+
+                <div class="stat">
+                    <span>Verloren</span>
+                    <strong id="losses">0</strong>
+                </div>
+
+                <div class="stat">
+                    <span>Gewinnserie</span>
+                    <strong id="streak">0</strong>
+                </div>
+
+            </div>
+
+        </section>
+
+        <section class="rules">
+
+            <h2>Spielregeln</h2>
+
+            <p>
+                🎲 Würfle mit zwei Würfeln.
+            </p>
+
+            <p>
+                ⭐ Bei einer Summe von <strong>7</strong> erhältst du das
+                <strong>2-fache</strong> deines Einsatzes als Gewinn.
+            </p>
+
+            <p>
+                🔥 Bei einem Pasch erhältst du das
+                <strong>3-fache</strong> deines Einsatzes als Gewinn.
+            </p>
+
+            <p>
+                💀 Bei allen anderen Ergebnissen verlierst du deinen Einsatz.
+            </p>
+
+        </section>
+
+    </main>
+
+    <script src="script.js"></script>
+
+</body>
+</html>

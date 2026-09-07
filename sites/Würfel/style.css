@@ -1,0 +1,190 @@
+* {
+  box-sizing: border-box;
+}
+
+/* Ganze Seite */
+body {
+  min-height: 100vh;
+  margin: 0;
+  background: linear-gradient(to bottom, #57018E, #200134);
+  background-repeat: no-repeat;
+  font-family: Arial, sans-serif;
+}
+
+/* Allgemeines für beide Header */
+header {
+  background: radial-gradient(circle, #A47BDB, #5A4377);
+}
+
+/* Oberste Leiste */
+.topbar {
+  height: 48px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 45px;
+}
+
+/* Info-Button */
+.infobutton {
+  width: 30em;
+  height: 42px;
+  border: none;
+  background-color: #8060AB;
+  cursor: pointer;
+}
+
+.infobutton:hover {
+  background-color: #9272bc;
+}
+
+/* Info-Text */
+h2 {
+  margin: 0;
+  color: black;
+  font-size: 18px;
+}
+
+/* Flaggen-Container */
+.languages {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+/* Flaggen */
+.language-flag {
+  width: 4em;
+  height: 2em;
+  object-fit: cover;
+  cursor: pointer;
+}
+
+/* Zweite Kopfzeile */
+.header2 {
+  min-height: 54px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 7px 48px;
+  background-color: #774DAF;
+}
+
+/* Überschrift */
+h1 {
+  margin: 0;
+  color: black;
+  font-family: "Irish Grover", cursive;
+  font-size: 38px;
+  font-weight: normal;
+}
+
+/* Geldanzeige */
+.moneten {
+  margin: 0;
+  color: black;
+  font-family: Georgia, serif;
+  font-size: 18px;
+  font-weight: bold;
+}
+
+/* Großer Bereich in der Mitte */
+.casino-bereich {
+  width: min(82%, 1100px);
+  min-height: 520px;
+  margin: 0 auto;
+  padding: 75px 55px;
+
+  background: linear-gradient(
+    to bottom,
+    #8056B7,
+    #3F2A5B
+  );
+}
+
+/* Spiele in einem 2-mal-2-Raster */
+.spiele-container {
+  display: grid;
+  grid-template-columns: repeat(2, 225px);
+  justify-content: center;
+  gap: 62px 66px;
+}
+
+/* Einzelne Spiel-Karten */
+.spielbuttom {
+  height: 138px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  color: black;
+  font-size: 18px;
+  text-decoration: none;
+
+  background: linear-gradient(
+    to bottom,
+    #D36086,
+    #690C8F
+  );
+
+  transition: transform 0.2s ease, filter 0.2s ease;
+}
+
+/* Wenn die Maus auf einem Spiel ist */
+.spielbuttom:hover {
+  color: black;
+  transform: scale(1.04);
+  filter: brightness(1.15);
+}
+
+/* Footer */
+footer {
+  min-height: 45px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: linear-gradient(to bottom, #462F65, #24003A);
+}
+
+footer p {
+  margin: 0;
+  color: black;
+}
+
+/* Für Handy-Bildschirme */
+@media (max-width: 650px) {
+  .topbar {
+    padding: 0 15px;
+  }
+
+  .infobutton {
+    width: 130px;
+  }
+
+  .header2 {
+    padding: 10px 20px;
+  }
+
+  h1 {
+    font-size: 27px;
+  }
+
+  .moneten {
+    font-size: 14px;
+  }
+
+  .casino-bereich {
+    width: 100%;
+    min-height: auto;
+    padding: 40px 20px;
+  }
+
+  .spiele-container {
+    grid-template-columns: 1fr;
+    gap: 28px;
+  }
+
+  .spielbuttom {
+    width: 100%;
+  }
+}
