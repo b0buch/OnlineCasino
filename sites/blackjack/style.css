@@ -1,4 +1,11 @@
 /* Header */
+.infobutton {
+    background-color: #8060AB;
+    border: 3px solid #774DAF;
+    width: 30em;
+    border-radius: 0px;
+}
+
 header {
  background: radial-gradient(circle, #A47BDB, #5A4377);
 
@@ -230,10 +237,7 @@ h1 {
 }
 
 
-button {
 
-    background: linear-gradient(#D36086, #690C8F);
-}
 
 
 /* footer */
@@ -242,13 +246,3 @@ footer {
     background: linear-gradient(#462F65, #24003A);
 }
 
-/* Noch zu erledigen:
-
-Benutzeroberfläche: #62428D
-
-    
-
-
-
-
-*/
