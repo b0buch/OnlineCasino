@@ -1,0 +1,99 @@
+
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>🎰 Slot Machine</title>
+
+    <link rel="stylesheet" href="slot.css">
+</head>
+
+<body>
+
+    <div class="machine" id="machine">
+
+        <h1>🎰 SLOT MACHINE 🎰</h1>
+
+        <div class="balance">
+            Guthaben:
+            <strong>
+                <span id="balance">100</span>
+                Credits
+            </strong>
+        </div>
+
+        <div class="bet-area">
+
+            <label for="bet">
+                Einsatz
+            </label>
+
+            <input
+                id="bet"
+                type="number"
+                min="1"
+                step="1"
+                value="5"
+                inputmode="numeric"
+                placeholder="Einsatz eingeben"
+            >
+
+        </div>
+
+        <div class="reels">
+
+            <div class="reel" id="reel1">
+                <div class="symbol-strip">
+                    <div class="symbol">🍒</div>
+                    <div class="symbol">🍋</div>
+                    <div class="symbol">🍊</div>
+                    <div class="symbol">🍉</div>
+                    <div class="symbol">⭐</div>
+                    <div class="symbol">💎</div>
+                    <div class="symbol">7️⃣</div>
+                </div>
+            </div>
+
+            <div class="reel" id="reel2">
+                <div class="symbol-strip">
+                    <div class="symbol">🍒</div>
+                    <div class="symbol">🍋</div>
+                    <div class="symbol">🍊</div>
+                    <div class="symbol">🍉</div>
+                    <div class="symbol">⭐</div>
+                    <div class="symbol">💎</div>
+                    <div class="symbol">7️⃣</div>
+                </div>
+            </div>
+
+            <div class="reel" id="reel3">
+                <div class="symbol-strip">
+                    <div class="symbol">🍒</div>
+                    <div class="symbol">🍋</div>
+                    <div class="symbol">🍊</div>
+                    <div class="symbol">🍉</div>
+                    <div class="symbol">⭐</div>
+                    <div class="symbol">💎</div>
+                    <div class="symbol">7️⃣</div>
+                </div>
+            </div>
+
+        </div>
+
+        <button id="spinButton">
+            🎰 SPIN
+        </button>
+
+        <div class="message" id="message">
+            Viel Glück! 🍀
+        </div>
+
+    </div>
+
+    <script src="slot.js"></script>
+
+</body>
+</html>
+
