@@ -195,7 +195,7 @@ function endGame(msg, newBalance) {
 const translations = {
     de: {
         title: "Online Casino",
-        money: "Geld: xxx$",
+        balance-box: "Money: ",
         blackjack: "Blackjack",
         info: "Info"
     },
