@@ -3,20 +3,17 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Blackjack</title>
+  <title id="page-title">Blackjack</title>
   <link rel="icon" href="img/logonobg.png" type="image/png">
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
-      <header>
+  <header>
+    <div class="header-left">
+      <a href="../Info/info.html" class="info-link">Info</a>
+      <a href="../index.html" class="info-link" id="nav-home">Home</a>
+    </div>
 
-                  <button class="infobutton">
-          <h2>Info</h2>
-<button><a href="../index.html">home</a></button>
-          </button>
-
-
- 
     <div class="languages">
       <img
         src="https://upload.wikimedia.org/wikipedia/commons/8/83/Flag_of_the_United_Kingdom_%283-5%29.svg"
@@ -24,7 +21,6 @@
         onclick="setLanguage('en')"
         class="language-flag"
       >
-
       <img
         src="https://upload.wikimedia.org/wikipedia/commons/b/ba/Flag_of_Germany.svg"
         alt="Deutsch"
@@ -32,50 +28,50 @@
         class="language-flag"
       >
     </div>
+  </header>
 
+  <div class="game-container">
+    <h1 id="title">BLACKJACK</h1>
 
-    </header>
-
-<div class="game-container">
-  <h1>BLACKJACK</h1>
-
-  <div class="balance-container">
-    <div class="balance-box">Geld: <span id="balance">100</span>€</div>
-    <div class="balance-box">Einsatz: <span id="current-bet-display">10</span>€</div>
-  </div>
-
-  <div class="area">
-    <h2>Dealer (<span id="dealer-score">0</span>)</h2>
-    <div id="dealer-cards" class="cards"></div>
-  </div>
-
-  <div class="area">
-    <h2>Spieler (<span id="player-score">0</span>)</h2>
-    <div id="player-cards" class="cards"></div>
-  </div>
-
-  <!-- Wettsystem-Steuerung -->
-  <div id="betting-controls" class="betting-area">
-    <label for="bet-input">Einsatz wählen:</label>
-    <div class="bet-buttons">
-      <button onclick="setBet(10)">+10€</button>
-      <button onclick="setBet(25)">+25€</button>
-      <button onclick="setBet(50)">+50€</button>
-      <button onclick="resetBet()" class="btn-danger">Zurücksetzen</button>
+    <div class="balance-container">
+      <div class="balance-box"><span id="lbl-balance">Geld</span>: <span id="balance">100</span>€</div>
+      <div class="balance-box"><span id="lbl-bet">Einsatz</span>: <span id="current-bet-display">10</span>€</div>
     </div>
-    <input type="number" id="bet-input" value="10" min="1">
-    <button id="start-btn" onclick="startGame()" class="btn-start">Runde Starten</button>
+
+    <div class="area">
+      <h2><span id="dealer-title">Dealer</span> (<span id="dealer-score">0</span>)</h2>
+      <div id="dealer-cards" class="cards"></div>
+    </div>
+
+    <div class="area">
+      <h2><span id="player-title">Spieler</span> (<span id="player-score">0</span>)</h2>
+      <div id="player-cards" class="cards"></div>
+    </div>
+
+    <!-- Wettsystem-Steuerung -->
+    <div id="betting-controls" class="betting-area">
+      <label for="bet-input" id="lbl-select-bet">Einsatz wählen:</label>
+      <div class="bet-buttons">
+        <button onclick="setBet(10)">+10€</button>
+        <button onclick="setBet(25)">+25€</button>
+        <button onclick="setBet(50)">+50€</button>
+        <button onclick="resetBet()" class="btn-danger" id="reset-btn">Zurücksetzen</button>
+      </div>
+      <input type="number" id="bet-input" value="10" min="1">
+      <button id="start-btn" onclick="startGame()" class="btn-start">Runde Starten</button>
+    </div>
+
+    <!-- Spiel-Steuerung -->
+    <div class="controls">
+      <button id="hit-btn" onclick="hit()" disabled>Karte Ziehen</button>
+      <button id="stand-btn" onclick="stand()" disabled>Halten</button>
+    </div>
+
+    <div id="message"></div>
   </div>
 
-  <!-- Spiel-Steuerung -->
-  <div class="controls">
-    <button id="hit-btn" onclick="hit()" disabled>Karte Ziehen</button>
-    <button id="stand-btn" onclick="stand()" disabled>Halten</button>
-  </div>
+  <footer></footer>
 
-  <div id="message"></div>
-</div>
-
-<script src="script.js"></script>
+  <script src="script.js"></script>
 </body>
 </html>

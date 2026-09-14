@@ -1,30 +1,3 @@
-/* Header */
-.infobutton {
-    background-color: #8060AB;
-    border: 3px solid #774DAF;
-    width: 30em;
-    border-radius: 0px;
-}
-
-header {
- background: radial-gradient(circle, #A47BDB, #5A4377);
-
-}
-
-.header2 {
-
-    background-color: #774DAF;
-}
-
-img {
-    
-    height: 2em;
-    width: 4em;
-    float: right;
-}
-
-
-
 :root {
   --bg-color: #0f172a;
   --card-bg: rgba(255, 255, 255, 0.07);
@@ -42,33 +15,76 @@ img {
 }
 
 body {
-    background: linear-gradient(to bottom, #57018E, #200134);
-    background-repeat: no-repeat;
-    color: var(--text);
-    min-height: 100vh;
-    padding: 0;
+  background: linear-gradient(to bottom, #57018E, #200134);
+  background-repeat: no-repeat;
+  color: var(--text);
+  min-height: 100vh;
+  padding: 0;
 }
 
-.game-container {
-  margin: 40px auto;
+/* Header & Sprachen */
+header {
+  background: radial-gradient(circle, #A47BDB, #5A4377);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px 20px;
 }
 
+.header-left {
+  display: flex;
+  gap: 10px;
+}
+
+.info-link {
+  background-color: #8060AB;
+  border: 2px solid #774DAF;
+  color: white;
+  text-decoration: none;
+  padding: 6px 16px;
+  border-radius: 6px;
+  font-weight: 600;
+  display: inline-block;
+}
+
+.languages {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.language-flag {
+  height: 2em;
+  width: 3em;
+  cursor: pointer;
+  border-radius: 4px;
+  transition: transform 0.2s;
+  object-fit: cover;
+}
+
+.language-flag:hover {
+  transform: scale(1.1);
+}
+
+/* Spielfeld Container */
 .game-container {
   background: var(--card-bg);
   backdrop-filter: blur(12px);
   border: 1px solid rgba(255, 255, 255, 0.1);
   border-radius: 20px;
   padding: 30px;
-  width: 100%;
+  width: 90%;
   max-width: 600px;
   box-shadow: 0 20px 40px rgba(0,0,0,0.5);
   text-align: center;
+  margin: 40px auto;
 }
 
 h1 { 
   margin-bottom: 15px; 
   font-weight: 300; 
   letter-spacing: 2px; 
+  color: white;
 }
 
 .balance-container {
@@ -98,6 +114,7 @@ h1 {
   margin-bottom: 10px; 
 }
 
+/* Karten */
 .cards {
   display: flex;
   justify-content: center;
@@ -131,6 +148,7 @@ h1 {
   100% { transform: scale(1); opacity: 1; }
 }
 
+/* Wettsystem & Buttons */
 .betting-area {
   margin-bottom: 20px;
   display: flex;
@@ -214,35 +232,12 @@ button:disabled {
 #message { 
   font-size: 1.2rem; 
   font-weight: 600; 
-  height: 30px; 
+  min-height: 30px; 
   margin-top: 10px; 
 }
 
-
-
-/* Body */
-
-body {
-
-    background: linear-gradient(to bottom,  #57018E,  #200134);
-    background-repeat: no-repeat;
-}
-
-
-
-/* Text */
-
-h1 {
-    color: white;
-}
-
-
-
-
-
-/* footer */
-
 footer {
-    background: linear-gradient(#462F65, #24003A);
+  background: linear-gradient(#462F65, #24003A);
+  height: 50px;
+  margin-top: auto;
 }
-
