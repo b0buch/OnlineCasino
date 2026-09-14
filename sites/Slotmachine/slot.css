@@ -1,347 +1,184 @@
 
-* {
-    box-sizing: border-box;
+*{box-sizing:border-box;margin:0;padding:0}
+
+body{
+    min-height:100vh;
+    background:radial-gradient(circle at top,#8056B7,#200134 75%);
+    font-family:Arial,sans-serif;
+    color:black
 }
 
-body {
-    margin: 0;
-    min-height: 100vh;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-
-    background:
-        radial-gradient(circle at top, #8056B7, #200134 75%);
-
-    font-family: Arial, Helvetica, sans-serif;
-    color: black;
+/* Header */
+header{
+    width:100%;
+    height:65px;
+    padding:0 45px;
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    background:radial-gradient(circle,#A47BDB,#5A4377)
 }
 
-
-header {
- background: radial-gradient(circle, #A47BDB, #5A4377);
-
-}
-/* =========================
-   MACHINE
-========================= */
-
-.machine {
-    width: 500px;
-    max-width: 95%;
-    padding: 30px;
-    text-align: center;
-
-    background:
-        linear-gradient(
-            145deg,
-            #8056B7,
-            #3F2A5B
-        );
-
-    border: 6px solid #A47BDB;
-    border-radius: 28px;
-
-    box-shadow:
-        0 0 30px rgba(164, 123, 219, .5),
-        inset 0 0 30px rgba(0, 0, 0, .3);
-
-    transition: .2s;
+.infobutton{
+    width:130px;
+    height:42px;
+    background:#8060AB;
+    border:3px solid #774DAF;
+    border-radius:8px;
+    cursor:pointer
 }
 
-/* =========================
-   TITLE
-========================= */
+.infobutton:hover{background:#9272BC}
+.infobutton a{color:black;text-decoration:none}
 
-h1 {
-    margin: 0 0 15px;
-
-    color: #D36086;
-    font-size: 34px;
-
-    text-shadow:
-        3px 3px #690C8F,
-        0 0 15px #D36086;
+/* Maschine */
+.machine{
+    width:500px;
+    max-width:95%;
+    margin:60px auto 40px;
+    padding:30px;
+    text-align:center;
+    background:linear-gradient(145deg,#8056B7,#3F2A5B);
+    border:6px solid #A47BDB;
+    border-radius:28px;
+    box-shadow:0 0 30px #A47BDB,inset 0 0 30px #0005
 }
 
-/* =========================
-   BALANCE
-========================= */
-
-.balance {
-    margin-bottom: 20px;
-    font-size: 20px;
+h1{
+    margin-bottom:15px;
+    color:#D36086;
+    font-size:34px;
+    text-shadow:3px 3px #690C8F,0 0 15px #D36086
 }
 
-#balance {
-    color: #D36086;
-    font-size: 26px;
+/* Guthaben */
+.balance{margin-bottom:20px;font-size:20px}
+#balance{color:#D36086;font-size:26px}
+
+/* Einsatz */
+.bet-area{margin-bottom:20px}
+.bet-area label{display:block;margin-bottom:8px;font-weight:bold}
+
+#bet{
+    width:100%;
+    padding:13px;
+    border:3px solid #A47BDB;
+    border-radius:10px;
+    text-align:center;
+    font-size:22px;
+    font-weight:bold
 }
 
-/* =========================
-   BET
-========================= */
-
-.bet-area {
-    margin-bottom: 20px;
+/* Walzen */
+.reels{
+    display:flex;
+    justify-content:center;
+    gap:12px;
+    margin:25px 0
 }
 
-.bet-area label {
-    display: block;
-    margin-bottom: 8px;
-    font-size: 17px;
-    font-weight: bold;
+.reel{
+    width:120px;
+    height:125px;
+    overflow:hidden;
+    position:relative;
+    background:#f5effa;
+    border:5px solid #3F2A5B;
+    border-radius:15px;
+    box-shadow:inset 0 0 18px #8056B7,0 7px 15px #000b
 }
 
-#bet {
-    width: 100%;
-    padding: 13px;
-
-    border: 3px solid #A47BDB;
-    border-radius: 10px;
-    outline: none;
-
-    text-align: center;
-    font-size: 22px;
-    font-weight: bold;
-
-    background-color: #f5effa;
-    color: black;
+.symbol-strip{
+    position:absolute;
+    width:100%;
+    display:flex;
+    flex-direction:column;
+    align-items:center
 }
 
-#bet:disabled {
-    opacity: .6;
+.symbol{
+    width:100%;
+    height:125px;
+    flex-shrink:0;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    font-size:62px
 }
 
-/* =========================
-   REELS
-========================= */
-
-.reels {
-    display: flex;
-    justify-content: center;
-    gap: 12px;
-    margin: 25px 0;
+/* Animation */
+.reel.spinning .symbol-strip{
+    animation:spinDown .1s linear infinite
 }
 
-.reel {
-    width: 120px;
-    height: 125px;
-    position: relative;
-    overflow: hidden;
-
-    background: #f5effa;
-
-    border: 5px solid #3F2A5B;
-    border-radius: 15px;
-
-    box-shadow:
-        inset 0 0 18px #8056B7,
-        0 7px 15px rgba(0, 0, 0, .7);
+@keyframes spinDown{
+    from{transform:translateY(-125px)}
+    to{transform:translateY(0)}
 }
 
-/* =========================
-   SYMBOL STRIP
-========================= */
+.reel.stop{animation:stopBounce .3s ease-out}
 
-.symbol-strip {
-    position: absolute;
-    left: 0;
-    top: 0;
-    width: 100%;
-
-    display: flex;
-    flex-direction: column;
-    align-items: center;
+@keyframes stopBounce{
+    0%{transform:translateY(-12px)}
+    40%{transform:translateY(7px)}
+    70%{transform:translateY(-3px)}
+    100%{transform:translateY(0)}
 }
 
-.symbol {
-    width: 100%;
-    height: 125px;
-    flex-shrink: 0;
-
-    display: flex;
-    justify-content: center;
-    align-items: center;
-
-    font-size: 62px;
-    user-select: none;
+/* Spin */
+#spinButton{
+    width:100%;
+    padding:17px;
+    border:0;
+    border-radius:13px;
+    background:linear-gradient(#D36086,#690C8F);
+    color:white;
+    font-size:24px;
+    font-weight:900;
+    cursor:pointer;
+    box-shadow:0 6px #3F2A5B,0 0 20px #A47BDB
 }
 
-/* =========================
-   SPIN
-========================= */
+#spinButton:hover{filter:brightness(1.1)}
+#spinButton:active{transform:translateY(5px)}
+#spinButton:disabled{opacity:.5;cursor:not-allowed}
 
-.reel.spinning .symbol-strip {
-    animation:
-        spinDown .10s linear infinite;
+/* Nachricht */
+.message{
+    min-height:32px;
+    margin-top:20px;
+    font-size:20px;
+    font-weight:bold
 }
 
-@keyframes spinDown {
-    from {
-        transform:
-            translateY(-125px);
-    }
-
-    to {
-        transform:
-            translateY(0);
-    }
+.message.win{
+    color:#D36086;
+    text-shadow:0 0 12px #D36086;
+    animation:win .5s infinite alternate
 }
 
-/* =========================
-   STOP EFFECT
-========================= */
-
-.reel.stop {
-    animation:
-        stopBounce .3s ease-out;
+@keyframes win{
+    to{transform:scale(1.1)}
 }
 
-@keyframes stopBounce {
-    0% {
-        transform:
-            translateY(-12px);
-    }
-
-    40% {
-        transform:
-            translateY(7px);
-    }
-
-    70% {
-        transform:
-            translateY(-3px);
-    }
-
-    100% {
-        transform:
-            translateY(0);
-    }
+/* Jackpot */
+.machine.jackpot{
+    animation:jackpot .3s infinite alternate
 }
 
-/* =========================
-   SPIN BUTTON
-========================= */
-
-#spinButton {
-    width: 100%;
-    padding: 17px;
-
-    border: none;
-    border-radius: 13px;
-
-    background:
-        linear-gradient(
-            #D36086,
-            #690C8F
-        );
-
-    color: white;
-    font-size: 24px;
-    font-weight: 900;
-    cursor: pointer;
-
-    box-shadow:
-        0 6px 0 #3F2A5B,
-        0 0 20px rgba(164, 123, 219, .5);
+@keyframes jackpot{
+    from{box-shadow:0 0 25px #D36086}
+    to{box-shadow:0 0 70px #A47BDB}
 }
 
-#spinButton:hover {
-    filter: brightness(1.1);
-}
-
-#spinButton:active {
-    transform: translateY(5px);
-
-    box-shadow:
-        0 1px 0 #3F2A5B;
-}
-
-#spinButton:disabled {
-    opacity: .5;
-    cursor: not-allowed;
-}
-
-/* =========================
-   MESSAGE
-========================= */
-
-.message {
-    min-height: 32px;
-    margin-top: 20px;
-
-    font-size: 20px;
-    font-weight: bold;
-}
-
-.message.win {
-    color: #D36086;
-
-    text-shadow:
-        0 0 12px #D36086;
-
-    animation:
-        winAnimation .5s infinite alternate;
-}
-
-@keyframes winAnimation {
-    from {
-        transform: scale(1);
-    }
-
-    to {
-        transform: scale(1.1);
-    }
-}
-
-/* =========================
-   JACKPOT
-========================= */
-
-.machine.jackpot {
-    animation:
-        jackpotFlash .3s infinite alternate;
-}
-
-@keyframes jackpotFlash {
-    from {
-        box-shadow:
-            0 0 25px #D36086;
-    }
-
-    to {
-        box-shadow:
-            0 0 70px #A47BDB;
-    }
-}
-
-/* =========================
-   MOBILE
-========================= */
-
-@media (max-width: 520px) {
-
-    .machine {
-        padding: 20px;
-    }
-
-    h1 {
-        font-size: 27px;
-    }
-
-    .reels {
-        gap: 7px;
-    }
-
-    .reel {
-        width: 95px;
-        height: 105px;
-    }
-
-    .symbol {
-        height: 105px;
-        font-size: 50px;
-    }
+/* Handy */
+@media(max-width:520px){
+    header{height:60px;padding:0 15px}
+    .infobutton{width:110px;height:38px}
+    .machine{width:95%;margin-top:35px;padding:20px}
+    h1{font-size:27px}
+    .reels{gap:7px}
+    .reel{width:95px;height:105px}
+    .symbol{height:105px;font-size:50px}
 }
 
