@@ -1,4 +1,3 @@
-let balance = 100;
 
 // HTML elements 
 const wheel = document.getElementById("wheel");
@@ -27,7 +26,10 @@ function getColor(number) {
         return "black";
     }
 }
-
+// Udate balance display
+function updateBalance(){
+    balanceText.textContent = CasinoBalance.get();
+}
 
 //spin the roulette
 function spin() {
@@ -42,7 +44,7 @@ function spin() {
     }
 
     // Check balance
-    if (bet > balance) {
+    if (bet > CasinoBalance.get()) {
         message.textContent = "Not enough balance.";
         return;
     }
@@ -50,9 +52,10 @@ function spin() {
     // Disable button while spinning
     spinButton.disabled = true;
 
-    // Remove bet
-    balance -= bet;
-    balanceText.textContent = balance;
+    // Remove bet from central balance
+    CasinoBalance.subtract(bet);
+
+    updateBalance();
 
     // Start animation
     wheel.classList.add("rolling");
@@ -93,17 +96,17 @@ function spin() {
                 winnings = bet * 2;
             }
 
-            balance += winnings;
+            CasinoBalance.add(winnings);
             message.textContent = `You won ${winnings - bet} $$$! 🎉`;
         } else {
             message.textContent = `You lost ${bet} $$$. 😢`;
         }
 
         // Update balance
-        balanceText.textContent = balance;
+        updateBalance();
 
         // Game over
-        if (balance <= 0) {
+        if (CasinoBalance.get() <= 0) {
 
             message.textContent += " Game over!";
 
@@ -120,6 +123,8 @@ function spin() {
 //button event 
 spinButton.addEventListener("click", spin);
 
+// Initial balance display 
+updateBalance();
 
 
  
