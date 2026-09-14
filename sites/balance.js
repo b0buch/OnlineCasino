@@ -7,7 +7,7 @@
     // Konfiguration
     const STORAGE_KEY = 'casino_balance';
     const DEFAULT_BALANCE = 100;
-    const CURRENCY_SYMBOL = '€'; // Anpassen: €, $, CHF, etc.
+    const CURRENCY_SYMBOL = '$'; // Anpassen: €, $, CHF, etc.
 
     // Initiales Guthaben laden oder setzen
     function getBalance() {
