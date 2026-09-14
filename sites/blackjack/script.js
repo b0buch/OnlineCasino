@@ -240,3 +240,8 @@ function endGame(msg, newBalance) {
   updateUI();
 }
 
+
+
+
+
+
