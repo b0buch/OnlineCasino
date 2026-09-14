@@ -5,8 +5,8 @@ let deck = [];
 let playerCards = [];
 let dealerCards = [];
 let gameOver = true;
+let currentLang = 'de';
 
-// Geld-System Variablen
 let balance = 100;
 let currentBet = 10;
 
@@ -18,7 +18,68 @@ const hitBtn = document.getElementById('hit-btn');
 const standBtn = document.getElementById('stand-btn');
 const messageEl = document.getElementById('message');
 
-// Synchronisiere Eingabefeld mit Klicks
+// Sprachübersetzungen
+const translations = {
+  de: {
+    title: "BLACKJACK",
+    balance: "Geld",
+    bet: "Einsatz",
+    dealer: "Dealer",
+    player: "Spieler",
+    selectBet: "Einsatz wählen:",
+    reset: "Zurücksetzen",
+    startRound: "Runde Starten",
+    hit: "Karte Ziehen",
+    stand: "Halten",
+    msgNoBet: "Bitte platziere einen Einsatz!",
+    msgNoBalance: "Nicht genügend Guthaben!",
+    msgBlackjack: "Blackjack! Du gewinnst 1.5x deinen Einsatz!",
+    msgBust: "Überkauft! Du hast deinen Einsatz verloren.",
+    msgDealerBust: "Dealer hat sich überkauft! Du gewinnst!",
+    msgWin: "Höhere Punktzahl! Du gewinnst!",
+    msgDealerWin: "Der Dealer gewinnt.",
+    msgDraw: "Unentschieden! Einsatz zurück.",
+    msgBroke: "Pleite! Du hast 100€ Gratis-Guthaben erhalten."
+  },
+  en: {
+    title: "BLACKJACK",
+    balance: "Money",
+    bet: "Bet",
+    dealer: "Dealer",
+    player: "Player",
+    selectBet: "Choose bet:",
+    reset: "Reset",
+    startRound: "Start Round",
+    hit: "Hit",
+    stand: "Stand",
+    msgNoBet: "Please place a bet!",
+    msgNoBalance: "Not enough funds!",
+    msgBlackjack: "Blackjack! You win 1.5x your bet!",
+    msgBust: "Bust! You lost your bet.",
+    msgDealerBust: "Dealer busted! You win!",
+    msgWin: "Higher score! You win!",
+    msgDealerWin: "Dealer wins.",
+    msgDraw: "Tie! Bet returned.",
+    msgBroke: "Broke! You received 100€ free balance."
+  }
+};
+
+function setLanguage(lang) {
+  currentLang = lang;
+  const t = translations[lang];
+
+  document.getElementById("title").textContent = t.title;
+  document.getElementById("lbl-balance").textContent = t.balance;
+  document.getElementById("lbl-bet").textContent = t.bet;
+  document.getElementById("dealer-title").textContent = t.dealer;
+  document.getElementById("player-title").textContent = t.player;
+  document.getElementById("lbl-select-bet").textContent = t.selectBet;
+  document.getElementById("reset-btn").textContent = t.reset;
+  startBtn.textContent = t.startRound;
+  hitBtn.textContent = t.hit;
+  standBtn.textContent = t.stand;
+}
+
 betInputEl.addEventListener('input', (e) => {
   let val = parseInt(e.target.value) || 0;
   currentBet = val;
@@ -97,17 +158,17 @@ function updateUI() {
 
 function startGame() {
   currentBet = parseInt(betInputEl.value) || 0;
+  const t = translations[currentLang];
 
   if (currentBet <= 0) {
-    messageEl.innerText = 'Bitte platziere einen Einsatz!';
+    messageEl.innerText = t.msgNoBet;
     return;
   }
   if (currentBet > balance) {
-    messageEl.innerText = 'Nicht genügend Guthaben!';
+    messageEl.innerText = t.msgNoBalance;
     return;
   }
 
-  // Einsatz wird zu Spielbeginn abgezogen
   balance -= currentBet;
   gameOver = false;
 
@@ -123,9 +184,8 @@ function startGame() {
 
   updateUI();
 
-  // Sofortiger Blackjack-Check
   if (calculateScore(playerCards) === 21) {
-    endGame('Blackjack! Du gewinnst 1.5x deinen Einsatz!', balance + currentBet * 2.5);
+    endGame(t.msgBlackjack, balance + currentBet * 2.5);
   }
 }
 
@@ -135,14 +195,13 @@ function hit() {
   updateUI();
 
   if (calculateScore(playerCards) > 21) {
-    endGame('Überkauft! Du hast deinen Einsatz verloren.', balance); // Einsatz verloren
+    endGame(translations[currentLang].msgBust, balance);
   }
 }
 
 function stand() {
   if (gameOver) return;
 
-  // Dealer zieht bis 17
   while (calculateScore(dealerCards) < 17) {
     dealerCards.push(deck.pop());
   }
@@ -150,20 +209,16 @@ function stand() {
 
   const pScore = calculateScore(playerCards);
   const dScore = calculateScore(dealerCards);
+  const t = translations[currentLang];
 
-  // GELD-AUSGABE LOGIK
   if (dScore > 21) {
-    // Dealer überkauft -> Gewonnen (Einsatz verdoppeln)
-    endGame('Dealer hat sich überkauft! Du gewinnst!', balance + (currentBet * 2));
+    endGame(t.msgDealerBust, balance + (currentBet * 2));
   } else if (pScore > dScore) {
-    // Spieler gewinnt -> Einsatz verdoppeln
-    endGame('Höhere Punktzahl! Du gewinnst!', balance + (currentBet * 2));
+    endGame(t.msgWin, balance + (currentBet * 2));
   } else if (dScore > pScore) {
-    // Dealer gewinnt -> Einsatz weg (Guthaben bleibt wie es ist)
-    endGame('Der Dealer gewinnt.', balance);
+    endGame(t.msgDealerWin, balance);
   } else {
-    // Unentschieden -> Einsatz zurück
-    endGame('Unentschieden! Einsatz zurück.', balance + currentBet);
+    endGame(t.msgDraw, balance + currentBet);
   }
 }
 
@@ -177,44 +232,10 @@ function endGame(msg, newBalance) {
   startBtn.disabled = false;
   betInputEl.disabled = false;
 
-  // Prüfen ob pleite
   if (balance <= 0) {
-    messageEl.innerText = 'Pleite! Du hast 100€ Gratis-Guthaben erhalten.';
+    messageEl.innerText = translations[currentLang].msgBroke;
     balance = 100;
   }
 
   updateUI();
-}
-
-
-
-
-
-// sprache
-
-const translations = {
-    de: {
-        title: "Online Casino",
-        balance-box: "Money: ",
-        blackjack: "Blackjack",
-        info: "Info"
-    },
-
-    en: {
-        title: "Online Casino",
-        money: "Money: xxx$",
-        blackjack: "Blackjack",
-        info: "Info"
-    }
-};
-
-function setLanguage(language) {
-    document.getElementById("title").textContent =
-        translations[language].title;
-
-    document.getElementById("money").textContent =
-        translations[language].money;
-
-    document.getElementById("blackjack").textContent =
-        translations[language].blackjack;
 }
