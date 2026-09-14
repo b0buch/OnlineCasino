@@ -1,29 +1,62 @@
-* {
-  box-sizing: border-box;
+/* Main Style */
+
+
+/* Header */
+
+.Hero {
+ background: radial-gradient(circle, #A47BDB, #5A4377);
+
+}
+
+
+.infobutton {
+    background: linear-gradient(#D36086, #690C8F);
+}
+
+img {  
+    height: 2em;
+    width: 4em;
+    float: right;
+}
+
+a {
+    text-decoration: none;
+    color: black;
+
+}
+
+/*Main Style */
+
+* { 
+  box-sizing: border-box; 
 }
 
 body {
   margin: 0;
   min-height: 100vh;
 
-  display: flex;
-  justify-content: center;
-  align-items: center;
-
-  background: #111;
+  background: linear-gradient(to bottom,  #57018E,  #200134);
   color: white;
 
   font-family: Arial, sans-serif;
+}
+
+.gamestyle {
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
 .game {
   width: 350px;
   padding: 25px;
 
+
   text-align: center;
 
-  background: #222;
+  background: #690C8F;
   border-radius: 15px;
+  background: var(--card-bg);
 
   box-shadow: 0 10px 30px black;
 }
