@@ -1,29 +1,94 @@
-
 <!DOCTYPE html>
 <html lang="de">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <title>🎰 Slot Machine</title>
+    <title id="page-title">🎰 Slot Machine</title>
 
     <link rel="stylesheet" href="slot.css">
+
+    <style>
+        .lang-switch {
+            display: inline-flex;
+            gap: 8px;
+            margin-left: 16px;
+            vertical-align: middle;
+        }
+
+        .lang-btn {
+            padding: 0;
+            width: 36px;
+            height: 24px;
+            border: 2px solid transparent;
+            border-radius: 4px;
+            background: none;
+            cursor: pointer;
+            overflow: hidden;
+            opacity: 0.6;
+            transition: opacity 0.2s, border-color 0.2s, transform 0.2s;
+        }
+
+        .lang-btn svg {
+            display: block;
+            width: 100%;
+            height: 100%;
+        }
+
+        .lang-btn:hover {
+            opacity: 1;
+            transform: scale(1.08);
+        }
+
+        .lang-btn.active {
+            opacity: 1;
+            border-color: #ffd700;
+        }
+    </style>
 </head>
 
 <body>
 <header>
 
-                  
-         <a href="../Info/info.html">Info</a> 
-<a href="../index.html">home</a>
-          
-          </header>
+    <a href="../Info/info.html" id="nav-info">Info</a>
+    <a href="../index.html" id="nav-home">home</a>
+
+    <span class="lang-switch">
+
+        <button type="button" class="lang-btn" id="lang-de" data-lang="de"
+                title="Deutsch" aria-label="Deutsch">
+            <svg viewBox="0 0 5 3" xmlns="http://www.w3.org/2000/svg">
+                <rect width="5" height="3" fill="#FFCE00"/>
+                <rect width="5" height="2" fill="#DD0000"/>
+                <rect width="5" height="1" fill="#000000"/>
+            </svg>
+        </button>
+
+        <button type="button" class="lang-btn" id="lang-en" data-lang="en"
+                title="English" aria-label="English">
+            <svg viewBox="0 0 60 30" xmlns="http://www.w3.org/2000/svg">
+                <clipPath id="uk-clip">
+                    <path d="M30,15 h30 v15 z v15 h-30 z h-30 v-15 z v-15 h30 z"/>
+                </clipPath>
+                <rect width="60" height="30" fill="#012169"/>
+                <path d="M0,0 L60,30 M60,0 L0,30" stroke="#FFFFFF" stroke-width="6"/>
+                <path d="M0,0 L60,30 M60,0 L0,30" clip-path="url(#uk-clip)"
+                      stroke="#C8102E" stroke-width="4"/>
+                <path d="M30,0 v30 M0,15 h60" stroke="#FFFFFF" stroke-width="10"/>
+                <path d="M30,0 v30 M0,15 h60" stroke="#C8102E" stroke-width="6"/>
+            </svg>
+        </button>
+
+    </span>
+
+</header>
+
     <div class="machine" id="machine">
 
         <h1>🎰 SLOT MACHINE 🎰</h1>
 
         <div class="balance">
-            Guthaben:
+            <span id="lbl-balance">Guthaben:</span>
             <strong>
                 <span id="balance">100</span>
                 Credits
@@ -32,7 +97,7 @@
 
         <div class="bet-area">
 
-            <label for="bet">
+            <label for="bet" id="lbl-bet">
                 Einsatz
             </label>
 
@@ -104,4 +169,3 @@
 
 </body>
 </html>
-
