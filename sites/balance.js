@@ -129,6 +129,22 @@
         storageKey: STORAGE_KEY
     };
 
+    // Gemeinsame Sprache für alle Seiten (de / en)
+    const LANG_KEY = 'casino_lang';
+    const SUPPORTED_LANGS = ['de', 'en'];
+
+    window.CasinoLang = {
+        get: function () {
+            const lang = localStorage.getItem(LANG_KEY);
+            return SUPPORTED_LANGS.includes(lang) ? lang : 'de';
+        },
+        set: function (lang) {
+            if (SUPPORTED_LANGS.includes(lang)) {
+                localStorage.setItem(LANG_KEY, lang);
+            }
+        }
+    };
+
     function init() {
         if (localStorage.getItem(STORAGE_KEY) === null) {
             saveBalance(DEFAULT_BALANCE);

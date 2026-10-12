@@ -53,9 +53,9 @@
     <div id="betting-controls" class="betting-area">
       <label for="bet-input" id="lbl-select-bet">Einsatz wählen:</label>
       <div class="bet-buttons">
-        <button onclick="setBet(10)">+10€</button>
-        <button onclick="setBet(25)">+25€</button>
-        <button onclick="setBet(50)">+50€</button>
+        <button onclick="setBet(10)">+10$</button>
+        <button onclick="setBet(25)">+25$</button>
+        <button onclick="setBet(50)">+50$</button>
         <button onclick="resetBet()" class="btn-danger" id="reset-btn">Zurücksetzen</button>
       </div>
       <input type="number" id="bet-input" value="10" min="1">
@@ -73,6 +73,7 @@
 
   <footer></footer>
 
+  <script src="../balance.js"></script>
   <script src="script.js"></script>
 </body>
 </html>

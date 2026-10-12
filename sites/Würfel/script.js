@@ -4,7 +4,9 @@
 // SPIELDATEN
 // ==========================================
 
-let balance = 1000;
+function getBalance() {
+    return CasinoBalance.get();
+}
 let wins = 0;
 let losses = 0;
 let streak = 0;
@@ -55,18 +57,17 @@ function randomDice() {
 
 function updateUI() {
 
-    balanceElement.textContent = balance;
+    balanceElement.textContent = getBalance();
 
     winsElement.textContent = wins;
     lossesElement.textContent = losses;
     streakElement.textContent = streak;
 
     // Einsatz darf niemals größer als das Guthaben sein
-    betInput.max = Math.max(balance, 1);
+    betInput.max = Math.max(getBalance(), 1);
 
-    if (Number(betInput.value) > balance) {
-        betInput.value = balance;
-    }
+    if (Number(betInput.value) > getBalance()) {
+        betInput.value = getBalance();
 }
 
 
@@ -94,12 +95,11 @@ plusBet.addEventListener("click", () => {
 
     bet += 10;
 
-    if (bet > balance) {
-        bet = balance;
-    }
+    if (bet > getBalance()) {
+    bet = getBalance();
 
     betInput.value = bet;
-});
+};
 
 
 quickBetButtons.forEach(button => {
@@ -108,10 +108,10 @@ quickBetButtons.forEach(button => {
 
         const amount = Number(button.dataset.bet);
 
-        if (amount <= balance) {
+         if (amount <= getBalance()) {
             betInput.value = amount;
         } else {
-            betInput.value = balance;
+            betInput.value = getBalance();
         }
 
     });
@@ -137,7 +137,7 @@ function getValidBet() {
         return null;
     }
 
-    if (bet > balance) {
+    if (bet > getBalance()) {
         return null;
     }
 
@@ -199,10 +199,13 @@ async function rollDice() {
         return;
     }
 
-    if (balance <= 0) {
+     if (getBalance() <= 0) {
+
+        CasinoBalance.set(100);
+        updateUI();
 
         resultElement.textContent =
-            "💀 Dein Guthaben ist aufgebraucht!";
+            "💀 Pleite! Du hast 100 Coins Gratis-Guthaben erhalten.";
 
         return;
     }
@@ -215,7 +218,7 @@ async function rollDice() {
         "🎲 Die Würfel rollen...";
 
     // Einsatz zunächst abziehen
-    balance -= bet;
+    CasinoBalance.subtract(bet);
 
     updateUI();
 
@@ -243,7 +246,7 @@ async function rollDice() {
         const multiplier = 3;
         const winnings = bet * multiplier;
 
-        balance += winnings;
+        CasinoBalance.add(winnings);
 
         wins++;
         streak++;
@@ -258,7 +261,7 @@ async function rollDice() {
         const multiplier = 2;
         const winnings = bet * multiplier;
 
-        balance += winnings;
+        CasinoBalance.add(winnings);
 
         wins++;
         streak++;
