@@ -55,7 +55,6 @@ const translations = {
     msgSpinning: () => "Das Rad dreht sich... 🎰",
     msgWin: p => `${p.number} ${p.color} – Du gewinnst ${p.profit}$! 🎉`,
     msgLose: p => `${p.number} ${p.color} – Du hast ${p.bet}$ verloren. 😢`,
-    msgBroke: () => `Pleite! Du hast ${FREE_BALANCE}$ Gratis-Guthaben erhalten.`
   },
   en: {
     title: "ROULETTE",
@@ -77,7 +76,6 @@ const translations = {
     msgSpinning: () => "The wheel is spinning... 🎰",
     msgWin: p => `${p.number} ${p.color} – You win ${p.profit}$! 🎉`,
     msgLose: p => `${p.number} ${p.color} – You lost ${p.bet}$. 😢`,
-    msgBroke: () => `Broke! You received ${FREE_BALANCE}$ free balance.`
   }
 };
 
@@ -246,12 +244,6 @@ function spin() {
       showMessage("msgWin", { number, colorKey: color, profit: winnings - bet });
     } else {
       showMessage("msgLose", { number, colorKey: color, bet });
-    }
-
-    // Pleite → wie bei Blackjack Gratis-Guthaben geben
-    if (CasinoBalance.get() <= 0) {
-      CasinoBalance.set(FREE_BALANCE);
-      showMessage("msgBroke");
     }
 
     // Einsatz darf nicht größer als das Guthaben bleiben

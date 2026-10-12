@@ -23,7 +23,6 @@ const streakEl = document.getElementById("streak");
 // SPIELDATEN
 // ==========================================
 const diceSymbols = ["⚀", "⚁", "⚂", "⚃", "⚄", "⚅"];
-const FREE_BALANCE = 100;
 const ROLL_TIME = 900;
 
 let currentLang = "de";
@@ -63,7 +62,6 @@ const translations = {
     msgDouble: p => `🔥 Pasch! ${p.a} + ${p.b} = ${p.total} – Du gewinnst ${p.profit}$!`,
     msgSeven: p => `⭐ ${p.a} + ${p.b} = 7 – Du gewinnst ${p.profit}$!`,
     msgLose: p => `💀 ${p.a} + ${p.b} = ${p.total} – Du hast ${p.bet}$ verloren.`,
-    msgBroke: () => `Pleite! Du hast ${FREE_BALANCE}$ Gratis-Guthaben erhalten.`
   },
   en: {
     title: "DICE GAME",
@@ -88,7 +86,6 @@ const translations = {
     msgDouble: p => `🔥 Double! ${p.a} + ${p.b} = ${p.total} – You win ${p.profit}$!`,
     msgSeven: p => `⭐ ${p.a} + ${p.b} = 7 – You win ${p.profit}$!`,
     msgLose: p => `💀 ${p.a} + ${p.b} = ${p.total} – You lost ${p.bet}$.`,
-    msgBroke: () => `Broke! You received ${FREE_BALANCE}$ free balance.`
   }
 };
 
@@ -253,12 +250,6 @@ function rollDice() {
       losses++;
       streak = 0;
       showMessage("msgLose", { a, b, total, bet });
-    }
-
-    // Pleite → wie bei Blackjack Gratis-Guthaben
-    if (CasinoBalance.get() <= 0) {
-      CasinoBalance.set(FREE_BALANCE);
-      showMessage("msgBroke");
     }
 
     // Einsatz darf nicht größer als das Guthaben bleiben
