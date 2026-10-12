@@ -1,177 +1,330 @@
-/* Main Style */
+/* Gleicher Grundstil wie Blackjack (blackjack/style.css) */
+:root {
+  --bg-color: #0f172a;
+  --card-bg: rgba(255, 255, 255, 0.07);
+  --accent: #10b981;
+  --accent-hover: #059669;
+  --danger: #ef4444;
+  --text: #f8fafc;
 
-
-/* Header */
-
-.Hero {
- background: radial-gradient(circle, #A47BDB, #5A4377);
-
+  --roulette-red: #dc2626;
+  --roulette-black: #111827;
+  --roulette-green: #059669;
 }
 
-
-.infobutton {
-    background: linear-gradient(#D36086, #690C8F);
-}
-
-img {  
-    height: 2em;
-    width: 4em;
-    float: right;
-}
-
-a {
-    text-decoration: none;
-    color: black;
-
-}
-
-/*Main Style */
-
-* { 
-  box-sizing: border-box; 
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
 }
 
 body {
-  margin: 0;
+  background: linear-gradient(to bottom, #57018E, #200134);
+  background-repeat: no-repeat;
+  color: var(--text);
   min-height: 100vh;
-
-  background: linear-gradient(to bottom,  #57018E,  #200134);
-  color: white;
-
-  font-family: Arial, sans-serif;
+  padding: 0;
 }
 
-.gamestyle {
+/* Header & Sprachen */
+header {
+  background: radial-gradient(circle, #A47BDB, #5A4377);
   display: flex;
-  justify-content: center;
+  justify-content: space-between;
   align-items: center;
+  padding: 10px 20px;
 }
 
-.game {
-  width: 350px;
-  padding: 25px;
-
-
-  text-align: center;
-
-  background: #690C8F;
-  border-radius: 15px;
-  background: var(--card-bg);
-
-  box-shadow: 0 10px 30px black;
-}
-
-h1 {
-  margin-top: 0;
-}
-
-/* Roulette wheel */
-
-.wheel {
-  width: 180px;
-  height: 180px;
-
-  margin: 20px auto;
-
-  border-radius: 50%;
-  border: 10px solid #333;
-
-  background: green;
-
+.header-left {
   display: flex;
-  justify-content: center;
-  align-items: center;
-
-  font-size: 45px;
-  font-weight: bold;
-}
-
-.wheel.red {
-  background: #d40000;
-}
-
-.wheel.black {
-  background: #000;
-}
-
-.wheel.green {
-  background: #008000;
-}
-
-/* Balance */
-
-.balance {
-  font-size: 20px;
-}
-
-/* Controls */
-
-.controls {
-  display: flex;
-  flex-direction: column;
-
   gap: 10px;
 }
 
-input,
-select,
-button {
-  width: 100%;
-
-  padding: 12px;
-
-  border: none;
-  border-radius: 8px;
-
-  font-size: 16px;
+.info-link {
+  background-color: #8060AB;
+  border: 2px solid #774DAF;
+  color: white;
+  text-decoration: none;
+  padding: 6px 16px;
+  border-radius: 6px;
+  font-weight: 600;
+  display: inline-block;
 }
 
-input,
-select {
-  background: white;
-  color: black;
+.languages {
+  display: flex;
+  align-items: center;
+  gap: 10px;
 }
 
-button {
-  margin-top: 10px;
-
-  background: #e0a800;
-  color: #111;
-
-  font-weight: bold;
-
+.language-flag {
+  height: 2em;
+  width: 3em;
   cursor: pointer;
+  border-radius: 4px;
+  transition: transform 0.2s;
+  object-fit: cover;
 }
 
-button:hover {
-  background: #ffc107;
+.language-flag:hover {
+  transform: scale(1.1);
 }
 
-button:disabled {
-  background: #555;
-  cursor: not-allowed;
+/* Spielfeld Container */
+.game-container {
+  background: var(--card-bg);
+  backdrop-filter: blur(12px);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 20px;
+  padding: 30px;
+  width: 90%;
+  max-width: 600px;
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.5);
+  text-align: center;
+  margin: 40px auto;
 }
 
-/* Result message */
+h1 {
+  margin-bottom: 15px;
+  font-weight: 300;
+  letter-spacing: 2px;
+  color: white;
+}
 
-#message {
-  min-height: 24px;
+.balance-container {
+  display: flex;
+  justify-content: space-around;
+  gap: 10px;
+  margin-bottom: 20px;
+}
 
-  margin-top: 15px;
+.balance-box {
+  background: rgba(255, 255, 255, 0.1);
+  padding: 8px 16px;
+  border-radius: 10px;
+  font-weight: 600;
+  font-size: 1.1rem;
+}
 
+.area {
+  background: rgba(0, 0, 0, 0.2);
+  border-radius: 12px;
+  padding: 15px;
+  margin-bottom: 20px;
+}
+
+.area h2 {
+  font-size: 1.1rem;
+  color: #94a3b8;
+  margin-bottom: 10px;
+}
+
+/* Roulette-Rad */
+.wheel {
+  width: 140px;
+  height: 140px;
+  margin: 5px auto 15px;
+  border-radius: 50%;
+  border: 8px solid rgba(255, 255, 255, 0.85);
+  box-shadow: 0 6px 14px rgba(0, 0, 0, 0.45), inset 0 0 0 4px rgba(0, 0, 0, 0.25);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 2.6rem;
   font-weight: bold;
+  color: white;
+  transition: background 0.1s;
 }
 
-.rolling {
-    animation: pulse 0.15s infinite alternate;
+.wheel.red   { background: var(--roulette-red); }
+.wheel.black { background: var(--roulette-black); }
+.wheel.green { background: var(--roulette-green); }
+
+.wheel.rolling {
+  animation: pulse 0.15s infinite alternate;
+}
+
+.wheel.result-pop {
+  animation: popIn 0.3s ease-out;
 }
 
 @keyframes pulse {
-    from {
-        transform: scale(1);
-    }
+  from { transform: scale(1); }
+  to   { transform: scale(1.06); }
+}
 
-    to {
-        transform: scale(1.08);
-    }
+@keyframes popIn {
+  0%   { transform: scale(0.5); opacity: 0; }
+  100% { transform: scale(1);   opacity: 1; }
+}
+
+/* Letzte Zahlen */
+.history-wrap {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  flex-wrap: wrap;
+  min-height: 30px;
+}
+
+.history-label {
+  color: #94a3b8;
+  font-size: 0.9rem;
+}
+
+.history {
+  display: flex;
+  gap: 6px;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+.chip {
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.8rem;
+  font-weight: bold;
+  border: 2px solid rgba(255, 255, 255, 0.6);
+}
+
+.chip.red   { background: var(--roulette-red); }
+.chip.black { background: var(--roulette-black); }
+.chip.green { background: var(--roulette-green); }
+
+/* Wettsystem & Buttons */
+.betting-area {
+  margin-bottom: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  align-items: center;
+}
+
+.sub-label {
+  margin-top: 6px;
+}
+
+.bet-buttons,
+.choice-buttons {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+.bet-buttons button {
+  padding: 6px 12px;
+  font-size: 0.9rem;
+  background: #334155;
+}
+
+.bet-buttons button:hover {
+  background: #475569;
+}
+
+/* Farbwahl */
+.choice {
+  padding: 8px 14px;
+  font-size: 0.95rem;
+  border: 2px solid transparent;
+  opacity: 0.7;
+}
+
+.choice.red   { background: var(--roulette-red); }
+.choice.black { background: var(--roulette-black); }
+.choice.green { background: var(--roulette-green); }
+
+.choice:hover {
+  opacity: 1;
+}
+
+.choice.red:hover   { background: var(--roulette-red); }
+.choice.black:hover { background: var(--roulette-black); }
+.choice.green:hover { background: var(--roulette-green); }
+
+.choice.active {
+  opacity: 1;
+  border-color: white;
+  box-shadow: 0 0 0 2px rgba(255, 255, 255, 0.25);
+}
+
+input[type="number"] {
+  width: 100px;
+  padding: 8px;
+  border-radius: 6px;
+  border: none;
+  text-align: center;
+  font-size: 1rem;
+  font-weight: bold;
+}
+
+button {
+  background: var(--accent);
+  color: white;
+  border: none;
+  padding: 12px 24px;
+  font-size: 1rem;
+  font-weight: 600;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: background 0.2s, transform 0.1s, opacity 0.2s;
+}
+
+button:hover {
+  background: var(--accent-hover);
+}
+
+button:active {
+  transform: scale(0.98);
+}
+
+button:disabled {
+  background: #475569;
+  cursor: not-allowed;
+  opacity: 0.6;
+}
+
+.btn-start {
+  background: #3b82f6;
+  width: 100%;
+  max-width: 250px;
+  margin-top: 6px;
+}
+
+.btn-start:hover {
+  background: #2563eb;
+}
+
+.btn-danger {
+  background: var(--danger) !important;
+}
+
+#message {
+  font-size: 1.2rem;
+  font-weight: 600;
+  min-height: 30px;
+  margin-top: 10px;
+}
+
+footer {
+  background: linear-gradient(#462F65, #24003A);
+  height: 50px;
+  margin-top: auto;
+}
+
+/* Handy */
+@media (max-width: 500px) {
+  .game-container {
+    padding: 20px 15px;
+  }
+
+  .balance-container {
+    flex-direction: column;
+  }
 }

@@ -7,7 +7,10 @@ let dealerCards = [];
 let gameOver = true;
 let currentLang = 'de';
 
-let balance = 100;
+let balance = CasinoBalance.get();
+function getBalance(){
+  return CasinoBalance.get();
+}
 let currentBet = 10;
 
 const balanceEl = document.getElementById('balance');
@@ -39,7 +42,7 @@ const translations = {
     msgWin: "Höhere Punktzahl! Du gewinnst!",
     msgDealerWin: "Der Dealer gewinnt.",
     msgDraw: "Unentschieden! Einsatz zurück.",
-    msgBroke: "Pleite! Du hast 100€ Gratis-Guthaben erhalten."
+    msgBroke: "Pleite! Du hast 100$ Gratis-Guthaben erhalten."
   },
   en: {
     title: "BLACKJACK",
@@ -60,12 +63,13 @@ const translations = {
     msgWin: "Higher score! You win!",
     msgDealerWin: "Dealer wins.",
     msgDraw: "Tie! Bet returned.",
-    msgBroke: "Broke! You received 100€ free balance."
+    msgBroke: "Broke! You received 100$ free balance."
   }
 };
 
 function setLanguage(lang) {
   currentLang = lang;
+  CasinoLang.set(lang);
   const t = translations[lang];
 
   document.getElementById("title").textContent = t.title;
@@ -89,7 +93,7 @@ betInputEl.addEventListener('input', (e) => {
 function setBet(amount) {
   if (!gameOver) return;
   currentBet += amount;
-  if (currentBet > balance) currentBet = balance;
+  if (currentBet > getBalance()) currentBet = getBalance();
   betInputEl.value = currentBet;
   currentBetDisplayEl.innerText = currentBet;
 }
@@ -153,23 +157,24 @@ function updateUI() {
 
   document.getElementById('player-score').innerText = calculateScore(playerCards);
   document.getElementById('dealer-score').innerText = calculateScore(dealerCards);
-  balanceEl.innerText = balance;
+  balanceEl.innerText = getBalance();
 }
 
 function startGame() {
   currentBet = parseInt(betInputEl.value) || 0;
   const t = translations[currentLang];
+  balance = CasinoBalance.get();
 
   if (currentBet <= 0) {
     messageEl.innerText = t.msgNoBet;
     return;
   }
-  if (currentBet > balance) {
+  if (currentBet > getBalance()) {
     messageEl.innerText = t.msgNoBalance;
     return;
   }
 
-  balance -= currentBet;
+  balance = CasinoBalance.subtract(currentBet);
   gameOver = false;
 
   createDeck();
@@ -195,7 +200,7 @@ function hit() {
   updateUI();
 
   if (calculateScore(playerCards) > 21) {
-    endGame(translations[currentLang].msgBust, balance);
+    endGame(translations[currentLang].msgBust, getBalance());
   }
 }
 
@@ -212,34 +217,36 @@ function stand() {
   const t = translations[currentLang];
 
   if (dScore > 21) {
-    endGame(t.msgDealerBust, balance + (currentBet * 2));
+    endGame(t.msgDealerBust, getBalance() + (currentBet * 2));
   } else if (pScore > dScore) {
-    endGame(t.msgWin, balance + (currentBet * 2));
+    endGame(t.msgWin, getBalance() + (currentBet * 2));
   } else if (dScore > pScore) {
-    endGame(t.msgDealerWin, balance);
+    endGame(t.msgDealerWin, getBalance());
   } else {
-    endGame(t.msgDraw, balance + currentBet);
+    endGame(t.msgDraw, getBalance() + currentBet);
   }
 }
 
 function endGame(msg, newBalance) {
   gameOver = true;
-  balance = newBalance;
-  
+  balance = CasinoBalance.set(newBalance);
+
   messageEl.innerText = msg;
   hitBtn.disabled = true;
   standBtn.disabled = true;
   startBtn.disabled = false;
   betInputEl.disabled = false;
 
-  if (balance <= 0) {
+  if (getBalance() <= 0) {
     messageEl.innerText = translations[currentLang].msgBroke;
-    balance = 100;
+    balance = CasinoBalance.set(100);
   }
 
   updateUI();
 }
 
+setLanguage(CasinoLang.get());
+balanceEl.innerText = CasinoBalance.get();
 
 
 
