@@ -42,7 +42,7 @@ const translations = {
     msgWin: "Höhere Punktzahl! Du gewinnst!",
     msgDealerWin: "Der Dealer gewinnt.",
     msgDraw: "Unentschieden! Einsatz zurück.",
-    msgBroke: "Pleite! Du hast 100$ Gratis-Guthaben erhalten."
+    msgBroke: "Broke looser!"
   },
   en: {
     title: "BLACKJACK",
@@ -63,7 +63,7 @@ const translations = {
     msgWin: "Higher score! You win!",
     msgDealerWin: "Dealer wins.",
     msgDraw: "Tie! Bet returned.",
-    msgBroke: "Broke! You received 100$ free balance."
+    msgBroke: "Broke looser!"
   }
 };
 
@@ -239,7 +239,6 @@ function endGame(msg, newBalance) {
 
   if (getBalance() <= 0) {
     messageEl.innerText = translations[currentLang].msgBroke;
-    balance = CasinoBalance.set(100);
   }
 
   updateUI();

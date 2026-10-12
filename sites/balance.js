@@ -198,13 +198,6 @@
 
         setupStorageListener();
         setupCustomEventListener();
-
-        console.log('💰 Casino Balance System initialized');
-        console.log('💰 Aktuelles Guthaben:', getBalance());
-        console.log('🛠️ Cheat Commands:');
-        console.log('   cmd("/give money 100 password: sigma123")');
-        console.log('   cmd("/take money 50 password: sigma123")');
-        console.log('   oder direkt: giveMoney(100, "sigma123") / takeMoney(50, "sigma123")');
     }
 
     if (document.readyState === 'loading') {
