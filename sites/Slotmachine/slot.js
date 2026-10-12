@@ -1,4 +1,3 @@
-
 /* =========================
    EINSTELLUNGEN
 ========================= */
@@ -45,12 +44,95 @@ const reels = [
 
 
 /* =========================
+   SPRACHE (DE / EN)
+========================= */
+
+const translations = {
+    de: {
+        pageTitle: "🎰 Slot Machine",
+        info: "Info",
+        home: "Startseite",
+        balance: "Guthaben:",
+        bet: "Einsatz",
+        betPlaceholder: "Einsatz eingeben",
+        welcome: "Viel Glück! 🍀",
+        invalidBet: "❌ Bitte einen gültigen Einsatz eingeben oder Guthaben prüfen.",
+        betPlaced: bet => `🎰 Einsatz: ${bet} Credits`,
+        jackpot: payout => `💰 JACKPOT! 777! +${payout} Credits!`,
+        win: (res, payout) => `🎉 GEWINN! ${res} → +${payout} Credits!`,
+        lose: res => `❌ VERLOREN! ${res}`,
+        noBalance: "💸 Kein Guthaben mehr!",
+        locale: "de-DE"
+    },
+    en: {
+        pageTitle: "🎰 Slot Machine",
+        info: "Info",
+        home: "Home",
+        balance: "Balance:",
+        bet: "Bet",
+        betPlaceholder: "Enter your bet",
+        welcome: "Good luck! 🍀",
+        invalidBet: "❌ Please enter a valid bet or check your balance.",
+        betPlaced: bet => `🎰 Bet: ${bet} Credits`,
+        jackpot: payout => `💰 JACKPOT! 777! +${payout} Credits!`,
+        win: (res, payout) => `🎉 YOU WIN! ${res} → +${payout} Credits!`,
+        lose: res => `❌ YOU LOST! ${res}`,
+        noBalance: "💸 No balance left!",
+        locale: "en-GB"
+    }
+};
+
+function t() {
+    return translations[CasinoLang.get()] || translations.de;
+}
+
+// Aktuelle Nachricht als Funktion speichern, damit sie bei
+// Sprachwechsel neu gerendert werden kann
+let currentMessage = () => t().welcome;
+
+function setMessage(fn) {
+    currentMessage = fn;
+    message.textContent = fn();
+}
+
+function applyLanguage() {
+
+    const lang = CasinoLang.get();
+    const tr = t();
+
+    document.documentElement.lang = lang;
+    document.getElementById("page-title").textContent = tr.pageTitle;
+    document.title = tr.pageTitle;
+    document.getElementById("nav-info").textContent = tr.info;
+    document.getElementById("nav-home").textContent = tr.home;
+    document.getElementById("lbl-balance").textContent = tr.balance;
+    document.getElementById("lbl-bet").textContent = tr.bet;
+    betInput.placeholder = tr.betPlaceholder;
+
+    document.querySelectorAll(".lang-btn").forEach(btn => {
+        btn.classList.toggle("active", btn.dataset.lang === lang);
+    });
+
+    message.textContent = currentMessage();
+
+    updateBalance();
+}
+
+document.querySelectorAll(".lang-btn").forEach(btn => {
+    btn.addEventListener("click", () => {
+        CasinoLang.set(btn.dataset.lang);
+        applyLanguage();
+    });
+});
+
+
+/* =========================
    GUTHABEN ANZEIGE
 ========================= */
 
 function updateBalance() {
     balanceElement.textContent =
-        CasinoBalance.get().toLocaleString("de-DE");
+        CasinoBalance.get().toLocaleString(t().locale);
 }
 
 
@@ -189,8 +271,7 @@ async function spin() {
 
     if (bet === null) {
 
-        message.textContent =
-            "❌ Bitte einen gültigen Einsatz eingeben oder Guthaben prüfen.";
+        setMessage(() => t().invalidBet);
 
         return;
     }
@@ -215,8 +296,7 @@ async function spin() {
     machine.classList.remove("jackpot");
     message.classList.remove("win");
 
-    message.textContent =
-        `🎰 Einsatz: ${bet} Credits`;
+    setMessage(() => t().betPlaced(bet));
 
 
     /* =========================
@@ -325,13 +405,11 @@ async function spin() {
 
             machine.classList.add("jackpot");
 
-            message.textContent =
-                `💰 JACKPOT! 777! +${payout} Credits!`;
+            setMessage(() => t().jackpot(payout));
 
         } else {
 
-            message.textContent =
-                `🎉 GEWINN! ${result.join("")} → +${payout} Credits!`;
+            setMessage(() => t().win(result.join(""), payout));
 
         }
 
@@ -344,8 +422,7 @@ async function spin() {
 
     else {
 
-        message.textContent =
-            `❌ VERLOREN! ${result.join("")}`;
+        setMessage(() => t().lose(result.join("")));
 
     }
 
@@ -392,8 +469,7 @@ async function spin() {
         spinButton.disabled = true;
         betInput.disabled = false;
 
-        message.textContent =
-            "💸 Kein Guthaben mehr!";
+        setMessage(() => t().noBalance);
 
         return;
     }
@@ -476,4 +552,4 @@ betInput.addEventListener(
    START
 ========================= */
 
-updateBalance();
+applyLanguage();
