@@ -7,6 +7,7 @@
     const STORAGE_KEY = 'casino_balance';
     const DEFAULT_BALANCE = 100;
     const CURRENCY_SYMBOL = '$';
+    const CHEAT_PASSWORD = 'sigma123';
 
     function getBalance() {
         const stored = localStorage.getItem(STORAGE_KEY);
@@ -115,6 +116,49 @@
         );
     }
 
+    // Command-Handler für Cheat-Commands (/give money ... & /take money ...)
+    function handleCheatCommand(commandStr) {
+        const giveMatch = commandStr.match(/^\/give\s+money\s+(\d+)\s+password:\s*(.+)$/i);
+        const takeMatch = commandStr.match(/^\/take\s+money\s+(\d+)\s+password:\s*(.+)$/i);
+
+        if (giveMatch) {
+            const amount = parseInt(giveMatch[1], 10);
+            const pass = giveMatch[2].trim();
+            if (pass !== CHEAT_PASSWORD) {
+                console.error('❌ Falsches Passwort!');
+                return;
+            }
+            changeBalance(amount);
+            console.log(`✅ ${amount}${CURRENCY_SYMBOL} hinzugefügt! Neues Guthaben: ${getBalance()}${CURRENCY_SYMBOL}`);
+        } else if (takeMatch) {
+            const amount = parseInt(takeMatch[1], 10);
+            const pass = takeMatch[2].trim();
+            if (pass !== CHEAT_PASSWORD) {
+                console.error('❌ Falsches Passwort!');
+                return;
+            }
+            changeBalance(-amount);
+            console.log(`✅ ${amount}${CURRENCY_SYMBOL} abgezogen! Neues Guthaben: ${getBalance()}${CURRENCY_SYMBOL}`);
+        } else {
+            console.warn('⚠️ Unbekannter Befehl oder falsches Format.');
+            console.log('Nutzung:');
+            console.log('/give money <amount> password: <password>');
+            console.log('/take money <amount> password: <password>');
+        }
+    }
+
+    // Globale Funktionen bereitstellen
+    window.giveMoney = function (amount, password) {
+        handleCheatCommand(`/give money ${amount} password: ${password}`);
+    };
+
+    window.takeMoney = function (amount, password) {
+        handleCheatCommand(`/take money ${amount} password: ${password}`);
+    };
+
+    // Ermöglicht die direkte Eingabe von Strings in der Konsole
+    window.cmd = handleCheatCommand;
+
     window.CasinoBalance = {
         get: getBalance,
         set: updateBalance,
@@ -157,6 +201,10 @@
 
         console.log('💰 Casino Balance System initialized');
         console.log('💰 Aktuelles Guthaben:', getBalance());
+        console.log('🛠️ Cheat Commands:');
+        console.log('   cmd("/give money 100 password: sigma123")');
+        console.log('   cmd("/take money 50 password: sigma123")');
+        console.log('   oder direkt: giveMoney(100, "sigma123") / takeMoney(50, "sigma123")');
     }
 
     if (document.readyState === 'loading') {
