@@ -6,14 +6,14 @@
 const translations = {
     de: {
         title: "Online Casino",
-        money: "Geld: xxx$",
+        money: "Geld: ",
         blackjack: "Blackjack",
         info: "Info"
     },
 
     en: {
         title: "Online Casino",
-        money: "Money: xxx$",
+        money: "Money: ",
         blackjack: "Blackjack",
         info: "Info"
     }
