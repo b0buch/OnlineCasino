@@ -3,35 +3,21 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-  <title>Purple Panda - Online Casino</title>
-
-  <link rel="icon" href="/img/logo-no-bg.png" type="image/png">
-
-  <link
-    href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css"
-    rel="stylesheet"
-    integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB"
-    crossorigin="anonymous">
-
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-
-  <link
-    href="https://fonts.googleapis.com/css2?family=Irish+Grover&display=swap"
-    rel="stylesheet"
-  >
-
+  <title>Purple Panda – Online Casino</title>
+  <link rel="icon" href="../img/logo-no-bg.png" type="image/png">
   <link rel="stylesheet" href="style.css">
 </head>
-
 <body>
 
-  <header class="topbar">
-
-     <a class="infobutton" href="./Info/info.html">
-      <h2 id="nav-info">Info</h2>
-    </a>
+  <!-- Kopfzeile: gleich wie in den Spielen -->
+  <header>
+    <div class="header-left">
+      <a href="./index.html" class="brand">
+        <img src="../img/logo-no-bg.png" alt="" class="brand-logo" onerror="this.remove()">
+        <span>Purple Panda</span>
+      </a>
+      <a href="./Info/info.html" class="info-link" id="nav-info">Info</a>
+    </div>
 
     <div class="languages">
       <img
@@ -40,7 +26,6 @@
         onclick="setLanguage('en')"
         class="language-flag"
       >
-
       <img
         src="https://upload.wikimedia.org/wikipedia/commons/b/ba/Flag_of_Germany.svg"
         alt="Deutsch"
@@ -48,51 +33,79 @@
         class="language-flag"
       >
     </div>
-
   </header>
 
-  <header class="header2">
+  <main>
+    <!-- Begrüssung + Guthaben -->
+    <section class="hero">
+      <p class="eyebrow" id="eyebrow">Online Casino</p>
+      <h1 id="title">Willkommen bei Purple Panda</h1>
+      <p class="subtitle" id="subtitle">Wähle ein Spiel – dein Guthaben gilt in allen Spielen.</p>
 
-    <h1 id="title">Online Casino</h1>
+      <div class="balance-box">
+        <span id="lbl-money">Geld</span>: <span id="money">100</span>$
+      </div>
+    </section>
 
-    <p class="moneten">
-      <span id="lbl-money">Geld</span>: <span id="money">100</span>
-    </p>
+    <!-- Spiele -->
+    <section class="games">
+      <a class="game-card" href="./blackjack/blackjack.html">
+        <div class="game-thumb">
+          <span class="game-emoji">🃏</span>
+          <img src="../img/blackjack.png" alt="" onerror="this.remove()">
+        </div>
+        <div class="game-info">
+          <h2 id="game-blackjack">Blackjack</h2>
+          <p id="desc-blackjack">Komm so nah wie möglich an 21.</p>
+        </div>
+        <span class="play-btn" data-play>Spielen</span>
+      </a>
 
-  </header>
+      <a class="game-card" href="./Roulette/roulette.html">
+        <div class="game-thumb">
+          <span class="game-emoji">🔴⚫</span>
+          <img src="../img/roulette.png" alt="" onerror="this.remove()">
+        </div>
+        <div class="game-info">
+          <h2 id="game-roulette">Roulette</h2>
+          <p id="desc-roulette">Setze auf Rot, Schwarz oder Grün.</p>
+        </div>
+        <span class="play-btn" data-play>Spielen</span>
+      </a>
 
-  <main class="casino-bereich">
+      <a class="game-card" href="./Slotmachine/Slotmachine.html">
+        <div class="game-thumb">
+          <span class="game-emoji">🎰</span>
+          <img src="../img/slotmachine.png" alt="" onerror="this.remove()">
+        </div>
+        <div class="game-info">
+          <h2 id="game-slot">Slotmachine</h2>
+          <p id="desc-slot">Drei gleiche Symbole gewinnen.</p>
+        </div>
+        <span class="play-btn" data-play>Spielen</span>
+      </a>
 
-<div class="spiele-container">
-  <a  class="spielbuttom" href="./blackjack/blackjack.html">
-    <img src="../img/blackjack.png" class="spielbuttom" alt="Blackjack">
-  </a>
-  <a  class="spielbuttom" href="./Roulette/roulette.html">
-    <img src="../img/roulette.png" class="spielbuttom" alt="Roulette">
-  </a>
-  <a  class="spielbuttom" href="./Slotmachine/Slotmachine.html">
-    <img src="../img/slotmachine.png" class="spielbuttom" alt="Slotmachine">
-  </a>
-  <a  class="spielbuttom" href="./Würfel/würfelspiel.html">
-    <img src="../img/würfel.png" class="spielbuttom" alt="Würfelspiel">
-  </a>
-</div>
+      <a class="game-card" href="./Würfel/würfelspiel.html">
+        <div class="game-thumb">
+          <span class="game-emoji">🎲</span>
+          <img src="../img/würfel.png" alt="" onerror="this.remove()">
+        </div>
+        <div class="game-info">
+          <h2 id="game-dice">Würfelspiel</h2>
+          <p id="desc-dice">Summe 7 oder Pasch gewinnt.</p>
+        </div>
+        <span class="play-btn" data-play>Spielen</span>
+      </a>
+    </section>
 
+    <p class="disclaimer" id="disclaimer">Nur Spielgeld – kein echtes Geld, keine Auszahlungen.</p>
   </main>
 
   <footer>
-    <p style="margin: 0; color: white;">© 2026 Purple Panda - Online Casino</p>
+    <p>© 2026 Purple Panda – Online Casino</p>
   </footer>
 
   <script src="balance.js"></script>
-
-  <script
-    src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"
-    integrity="sha384-FKyoEForCGlyvwx9Hj09JcYn3nv7wiPVlz7YYwJrWVcXK/BmnVDxM+D2scQbITxI"
-    crossorigin="anonymous"
-  ></script>
-
   <script src="script.js"></script>
-
 </body>
 </html>

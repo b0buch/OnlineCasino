@@ -1,179 +1,89 @@
-
 <!DOCTYPE html>
 <html lang="de">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-    <title>Würfelspiel</title>
-
-    <link rel="stylesheet" href="style.css">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Würfelspiel</title>
+  <link rel="icon" href="../../img/logonobg.png" type="image/png">
+  <link rel="stylesheet" href="style.css">
 </head>
-
 <body>
+  <header>
+    <div class="header-left">
+      <a href="../Info/info.html" class="info-link">Info</a>
+      <a href="../index.html" class="info-link" id="nav-home">Home</a>
+    </div>
 
-    <main class="game-container">
+    <div class="languages">
+      <img
+        src="https://upload.wikimedia.org/wikipedia/commons/8/83/Flag_of_the_United_Kingdom_%283-5%29.svg"
+        alt="English"
+        onclick="setLanguage('en')"
+        class="language-flag"
+      >
+      <img
+        src="https://upload.wikimedia.org/wikipedia/commons/b/ba/Flag_of_Germany.svg"
+        alt="Deutsch"
+        onclick="setLanguage('de')"
+        class="language-flag"
+      >
+    </div>
+  </header>
 
-        <header class="game-header">
-            <h1>🎲 Würfelspiel</h1>
-<button><a href="../index.html">home</a></button>
-            <div class="balance">
-                Guthaben:
-                <span id="balance">100</span>
-                Geld
-            </div>
-        </header>
+  <div class="game-container">
+    <h1 id="title">WÜRFELSPIEL</h1>
 
+    <div class="balance-container">
+      <div class="balance-box"><span id="lbl-balance">Geld</span>: <span id="balance">100</span>$</div>
+      <div class="balance-box"><span id="lbl-bet">Einsatz</span>: <span id="current-bet-display">10</span>$</div>
+    </div>
 
-        <section class="game-card">
+    <!-- Würfel -->
+    <div class="area">
+      <h2><span id="lbl-dice">Würfel</span> (<span id="dice-total">0</span>)</h2>
+      <div class="dice-container">
+        <div class="die" id="die1">⚀</div>
+        <div class="die" id="die2">⚀</div>
+      </div>
+    </div>
 
-            <!-- WÜRFEL -->
-            <div class="dice-container">
+    <!-- Wettsystem-Steuerung -->
+    <div id="betting-controls" class="betting-area">
+      <label for="bet-input" id="lbl-select-bet">Einsatz wählen:</label>
+      <div class="bet-buttons">
+        <button onclick="setBet(10)">+10$</button>
+        <button onclick="setBet(25)">+25$</button>
+        <button onclick="setBet(50)">+50$</button>
+        <button onclick="resetBet()" class="btn-danger" id="reset-btn">Zurücksetzen</button>
+      </div>
+      <input type="number" id="bet-input" value="10" min="1" step="1">
+      <button id="roll-btn" class="btn-start">Würfeln</button>
+    </div>
 
-                <div class="die" id="die1">
-                    ⚀
-                </div>
+    <div id="message"></div>
 
-                <div class="die" id="die2">
-                    ⚀
-                </div>
+    <!-- Statistik -->
+    <div class="area">
+      <div class="stats">
+        <div class="stat"><span id="lbl-wins">Gewonnen</span><strong id="wins">0</strong></div>
+        <div class="stat"><span id="lbl-losses">Verloren</span><strong id="losses">0</strong></div>
+        <div class="stat"><span id="lbl-streak">Gewinnserie</span><strong id="streak">0</strong></div>
+      </div>
+    </div>
 
-            </div>
+    <!-- Regeln -->
+    <div class="area rules">
+      <h2 id="lbl-rules">Spielregeln</h2>
+      <p id="rule-1">🎲 Würfle mit zwei Würfeln.</p>
+      <p id="rule-2">⭐ Eine Summe von <strong>7</strong> gibt das <strong>2-fache</strong>.</p>
+      <p id="rule-3">🔥 Ein Pasch gibt das <strong>3-fache</strong>.</p>
+      <p id="rule-4">💀 Bei allen anderen Ergebnissen verlierst du deinen Einsatz.</p>
+    </div>
+  </div>
 
+  <footer></footer>
 
-            <!-- ERGEBNIS -->
-            <div class="result" id="result">
-                Setze deinen Einsatz und würfle!
-            </div>
-
-
-            <!-- EINSATZ -->
-            <div class="bet-section">
-
-                <label for="bet">
-                    Einsatz
-                </label>
-
-                <div class="bet-controls">
-
-                    <button
-                        type="button"
-                        id="minusBet">
-                        −
-                    </button>
-
-                    <input
-                        type="number"
-                        id="bet"
-                        value="10"
-                        min="1"
-                        step="1"
-                    >
-
-                    <button
-                        type="button"
-                        id="plusBet">
-                        +
-                    </button>
-
-                </div>
-
-
-                <div class="quick-bets">
-
-                    <button
-                        type="button"
-                        data-bet="10">
-                        10
-                    </button>
-
-                    <button
-                        type="button"
-                        data-bet="25">
-                        25
-                    </button>
-
-                    <button
-                        type="button"
-                        data-bet="50">
-                        50
-                    </button>
-
-                    <button
-                        type="button"
-                        data-bet="100">
-                        100
-                    </button>
-
-                </div>
-
-            </div>
-
-
-            <!-- WÜRFELN -->
-            <button
-                type="button"
-                id="rollButton"
-                class="roll-button">
-
-                🎲 WÜRFELN
-
-            </button>
-
-
-            <!-- STATISTIK -->
-            <div class="stats">
-
-                <div class="stat">
-                    <span>Gewonnen</span>
-                    <strong id="wins">0</strong>
-                </div>
-
-                <div class="stat">
-                    <span>Verloren</span>
-                    <strong id="losses">0</strong>
-                </div>
-
-                <div class="stat">
-                    <span>Gewinnserie</span>
-                    <strong id="streak">0</strong>
-                </div>
-
-            </div>
-
-        </section>
-
-
-        <!-- REGELN -->
-        <section class="rules">
-
-            <h2>Spielregeln</h2>
-
-            <p>
-                🎲 Würfle mit zwei Würfeln.
-            </p>
-
-            <p>
-                ⭐ Eine Summe von <strong>7</strong>
-                gibt das <strong>2-fache</strong>.
-            </p>
-
-            <p>
-                🔥 Ein Pasch gibt das
-                <strong>3-fache</strong>.
-            </p>
-
-            <p>
-                💀 Bei allen anderen Ergebnissen
-                verlierst du deinen Einsatz.
-            </p>
-
-        </section>
-
-    </main>
-
-    <script src="../balance.js"></script>
-    <script src="script.js"></script>
-
+  <script src="../balance.js"></script>
+  <script src="script.js"></script>
 </body>
 </html>
