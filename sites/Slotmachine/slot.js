@@ -2,25 +2,12 @@
    EINSTELLUNGEN
 ========================= */
 
-const symbols = [
-    "🍒",
-    "🍋",
-    "🍊",
-    "🍉",
-    "⭐",
-    "💎",
-    "7️⃣"
-];
+const symbols = ["🍒", "🍋", "🍊", "🍉", "⭐", "💎", "7️⃣"];
 
-/*
-    Gewinnchance pro Spin (0.20 = 20 %)
-*/
+// Gewinnchance pro Spin (0.20 = 20 %)
 const winChance = 0.20;
 
-/*
-    Gewinn = 4.5 × Einsatz
-    (0.20 × 4.5 = 0.90 → RTP ca. 90 %)
-*/
+// Gewinn = 4.5 × Einsatz (0.20 × 4.5 = 0.90 → RTP ca. 90 %)
 const winMultiplier = 4.5;
 
 
@@ -29,18 +16,14 @@ const winMultiplier = 4.5;
 ========================= */
 
 const machine = document.getElementById("machine");
+const balanceElement = document.getElementById("balance");
+const betInput = document.getElementById("bet-input");
+const spinButton = document.getElementById("spin-btn");
+const message = document.getElementById("message");
+const currentBetDisplay = document.getElementById("current-bet-display");
 
-const balanceElement =
-    document.getElementById("balance");
-
-const betInput =
-    document.getElementById("bet");
-
-const spinButton =
-    document.getElementById("spinButton");
-
-const message =
-    document.getElementById("message");
+// Verhindert, dass balanceUpdate-Events während eines Spins die Steuerung freigeben
+let isSpinning = false;
 
 const reels = [
     document.getElementById("reel1"),
@@ -55,33 +38,47 @@ const reels = [
 
 const translations = {
     de: {
-        pageTitle: "🎰 Slot Machine",
+        pageTitle: "SLOTMACHINE",
         info: "Info",
         home: "Startseite",
-        balance: "Guthaben:",
+        balance: "Guthaben",
         bet: "Einsatz",
+        reels: "Walzen",
+        selectBet: "Einsatz wählen:",
+        reset: "Zurücksetzen",
+        spin: "Drehen",
+        rulesTitle: "Spielregeln",
+        rule1: m => `🎰 Drei gleiche Symbole gewinnen das <strong>${m}-fache</strong> deines Einsatzes.`,
+        rule2: "💰 Drei 7️⃣ sind der Jackpot.",
         betPlaceholder: "Einsatz eingeben",
         welcome: "Viel Glück! 🍀",
         invalidBet: "❌ Bitte einen gültigen Einsatz eingeben oder Guthaben prüfen.",
-        betPlaced: bet => `🎰 Einsatz: ${bet} Credits`,
-        jackpot: payout => `💰 JACKPOT! 777! +${payout} Credits!`,
-        win: (res, payout) => `🎉 GEWINN! ${res} → +${payout} Credits!`,
+        betPlaced: bet => `🎰 Einsatz: ${bet}$`,
+        jackpot: payout => `💰 JACKPOT! 777! +${payout}$!`,
+        win: (res, payout) => `🎉 GEWINN! ${res} → +${payout}$!`,
         lose: res => `❌ VERLOREN! ${res}`,
         noBalance: "💸 Kein Guthaben mehr!",
         locale: "de-DE"
     },
     en: {
-        pageTitle: "🎰 Slot Machine",
+        pageTitle: "SLOT MACHINE",
         info: "Info",
         home: "Home",
-        balance: "Balance:",
+        balance: "Balance",
         bet: "Bet",
+        reels: "Reels",
+        selectBet: "Choose your bet:",
+        reset: "Reset",
+        spin: "Spin",
+        rulesTitle: "Rules",
+        rule1: m => `🎰 Three matching symbols win <strong>${m}×</strong> your bet.`,
+        rule2: "💰 Three 7️⃣ are the jackpot.",
         betPlaceholder: "Enter your bet",
         welcome: "Good luck! 🍀",
         invalidBet: "❌ Please enter a valid bet or check your balance.",
-        betPlaced: bet => `🎰 Bet: ${bet} Credits`,
-        jackpot: payout => `💰 JACKPOT! 777! +${payout} Credits!`,
-        win: (res, payout) => `🎉 YOU WIN! ${res} → +${payout} Credits!`,
+        betPlaced: bet => `🎰 Bet: ${bet}$`,
+        jackpot: payout => `💰 JACKPOT! 777! +${payout}$!`,
+        win: (res, payout) => `🎉 YOU WIN! ${res} → +${payout}$!`,
         lose: res => `❌ YOU LOST! ${res}`,
         noBalance: "💸 No balance left!",
         locale: "en-GB"
@@ -102,17 +99,24 @@ function setMessage(fn) {
 }
 
 function applyLanguage() {
-
     const lang = CasinoLang.get();
     const tr = t();
+    const $ = id => document.getElementById(id);
 
     document.documentElement.lang = lang;
-    document.getElementById("page-title").textContent = tr.pageTitle;
     document.title = tr.pageTitle;
-    document.getElementById("nav-info").textContent = tr.info;
-    document.getElementById("nav-home").textContent = tr.home;
-    document.getElementById("lbl-balance").textContent = tr.balance;
-    document.getElementById("lbl-bet").textContent = tr.bet;
+    $("title").textContent = tr.pageTitle;
+    $("nav-info").textContent = tr.info;
+    $("nav-home").textContent = tr.home;
+    $("lbl-balance").textContent = tr.balance;
+    $("lbl-bet").textContent = tr.bet;
+    $("lbl-reels").textContent = tr.reels;
+    $("lbl-select-bet").textContent = tr.selectBet;
+    $("reset-btn").textContent = tr.reset;
+    spinButton.textContent = tr.spin;
+    $("lbl-rules").textContent = tr.rulesTitle;
+    $("rule-1").innerHTML = tr.rule1(winMultiplier);
+    $("rule-2").textContent = tr.rule2;
     betInput.placeholder = tr.betPlaceholder;
 
     document.querySelectorAll(".lang-btn").forEach(btn => {
@@ -122,6 +126,7 @@ function applyLanguage() {
     message.textContent = currentMessage();
 
     updateBalance();
+    updateBetDisplay();
 }
 
 document.querySelectorAll(".lang-btn").forEach(btn => {
@@ -133,12 +138,37 @@ document.querySelectorAll(".lang-btn").forEach(btn => {
 
 
 /* =========================
-   GUTHABEN ANZEIGE
+   ANZEIGEN
 ========================= */
 
+// balance.js schreibt das Guthaben selbst in #balance (ohne Formatierung),
+// deshalb hier keine eigene Formatierung, sonst überschreiben sich beide.
 function updateBalance() {
-    balanceElement.textContent =
-        CasinoBalance.get().toLocaleString(t().locale);
+    CasinoBalance.refresh();
+}
+
+function updateBetDisplay() {
+    currentBetDisplay.textContent =
+        Math.floor(Number(betInput.value)) || 0;
+}
+
+
+/* =========================
+   EINSATZ-HILFSFUNKTIONEN
+   (werden von den Buttons im HTML aufgerufen)
+========================= */
+
+function setBet(amount) {
+    const balance = CasinoBalance.get();
+    const current = Math.floor(Number(betInput.value)) || 0;
+
+    betInput.value = Math.max(1, Math.min(current + amount, balance));
+    updateBetDisplay();
+}
+
+function resetBet() {
+    betInput.value = Math.max(1, Math.min(10, CasinoBalance.get()));
+    updateBetDisplay();
 }
 
 
@@ -147,9 +177,7 @@ function updateBalance() {
 ========================= */
 
 function randomSymbol() {
-    return symbols[
-        Math.floor(Math.random() * symbols.length)
-    ];
+    return symbols[Math.floor(Math.random() * symbols.length)];
 }
 
 
@@ -158,16 +186,12 @@ function randomSymbol() {
 ========================= */
 
 function getBet() {
-
-    let bet = Number(betInput.value);
-
-    bet = Math.floor(bet);
+    // balance.js: getBet liefert 0 bei ungültiger Eingabe.
+    // Standard-ID dort ist "bet", unser Feld heißt "bet-input".
+    const bet = CasinoBalance.getBet("bet-input");
 
     // Ungültiger Einsatz
-    if (
-        !Number.isFinite(bet) ||
-        bet < 1
-    ) {
+    if (bet < 1) {
         return null;
     }
 
@@ -197,88 +221,55 @@ function generateResult() {
     let result;
 
     do {
-        result = [
-            randomSymbol(),
-            randomSymbol(),
-            randomSymbol()
-        ];
-    } while (
-        result[0] === result[1] &&
-        result[1] === result[2]
-    );
+        result = [randomSymbol(), randomSymbol(), randomSymbol()];
+    } while (result[0] === result[1] && result[1] === result[2]);
 
     return result;
 }
 
 
 /* =========================
-   WALZE VORBEREITEN
+   WALZEN
 ========================= */
 
 function prepareReel(reel) {
-
-    const strip =
-        reel.querySelector(".symbol-strip");
+    const strip = reel.querySelector(".symbol-strip");
 
     reel.classList.remove("spinning");
     reel.classList.remove("stop");
 
-    strip.style.transform =
-        "translateY(0)";
-
+    strip.style.transform = "translateY(0)";
 }
-
-
-/* =========================
-   ALLE WALZEN STARTEN
-========================= */
 
 function startAllReels() {
-
-    reels.forEach(reel => {
-        reel.classList.add("spinning");
-    });
-
+    reels.forEach(reel => reel.classList.add("spinning"));
 }
 
-
-/* =========================
-   WALZE STOPPEN
-========================= */
-
 function stopReel(reel, finalSymbol) {
-
     return new Promise(resolve => {
 
-        const strip =
-            reel.querySelector(".symbol-strip");
-
-        const symbolElements =
-            strip.querySelectorAll(".symbol");
+        const strip = reel.querySelector(".symbol-strip");
+        const symbolElements = strip.querySelectorAll(".symbol");
 
         // Endsymbol setzen
-        symbolElements[0].textContent =
-            finalSymbol;
+        symbolElements[0].textContent = finalSymbol;
 
         // Animation stoppen
         reel.classList.remove("spinning");
-
-        strip.style.transform =
-            "translateY(0)";
+        strip.style.transform = "translateY(0)";
 
         // Stop-Effekt
         reel.classList.add("stop");
 
         setTimeout(() => {
-
             reel.classList.remove("stop");
-
             resolve();
-
         }, 300);
-
     });
+}
 
+function wait(ms) {
+    return new Promise(resolve => setTimeout(resolve, ms));
 }
 
 
@@ -292,26 +283,16 @@ async function spin() {
     const bet = getBet();
 
     if (bet === null) {
-
         setMessage(() => t().invalidBet);
-
         return;
     }
 
-
-    /* =========================
-       EINSATZ ABZIEHEN
-    ========================= */
-
+    // Einsatz abziehen
+    isSpinning = true;
     CasinoBalance.subtract(bet);
-
     updateBalance();
 
-
-    /* =========================
-       OBERFLÄCHE SPERREN
-    ========================= */
-
+    // Oberfläche sperren
     spinButton.disabled = true;
     betInput.disabled = true;
 
@@ -320,255 +301,151 @@ async function spin() {
 
     setMessage(() => t().betPlaced(bet));
 
-
-    /* =========================
-       ERGEBNIS BESTIMMEN
-    ========================= */
-
+    // Ergebnis bestimmen
     const result = generateResult();
 
-
-    /* =========================
-       WALZEN VORBEREITEN
-    ========================= */
-
+    // Walzen vorbereiten und starten
     reels.forEach(prepareReel);
-
-
-    /* =========================
-       ALLE WALZEN STARTEN
-    ========================= */
-
     startAllReels();
 
+    await wait(1800);
 
-    // Alle Walzen drehen
-    await new Promise(resolve => {
+    // Walzen nacheinander stoppen
+    await stopReel(reels[0], result[0]);
+    await wait(180);
 
-        setTimeout(resolve, 1800);
+    await stopReel(reels[1], result[1]);
+    await wait(180);
 
-    });
+    await stopReel(reels[2], result[2]);
 
-
-    /* =========================
-       WALZE 1 STOPPT
-    ========================= */
-
-    await stopReel(
-        reels[0],
-        result[0]
-    );
-
-
-    await new Promise(resolve => {
-
-        setTimeout(resolve, 180);
-
-    });
-
-
-    /* =========================
-       WALZE 2 STOPPT
-    ========================= */
-
-    await stopReel(
-        reels[1],
-        result[1]
-    );
-
-
-    await new Promise(resolve => {
-
-        setTimeout(resolve, 180);
-
-    });
-
-
-    /* =========================
-       WALZE 3 STOPPT
-    ========================= */
-
-    await stopReel(
-        reels[2],
-        result[2]
-    );
-
-
-    /* =========================
-       GEWINN PRÜFEN
-    ========================= */
-
+    // Gewinn prüfen
     const isWin =
         result[0] === result[1] &&
         result[1] === result[2];
 
-
-    /* =========================
-       GEWINN
-    ========================= */
-
-    if (isWin){
+    if (isWin) {
 
         // Abrunden, damit das Guthaben ganzzahlig bleibt
-        const payout =
-            Math.floor(bet * winMultiplier);
+        const payout = Math.floor(bet * winMultiplier);
 
-
-        // Gewinn zum zentralen Guthaben hinzufügen
         CasinoBalance.add(payout);
-
         updateBalance();
-
 
         message.classList.add("win");
 
-
         // Jackpot-Effekt für 777
         if (result[0] === "7️⃣") {
-
             machine.classList.add("jackpot");
-
             setMessage(() => t().jackpot(payout));
-
         } else {
-
             setMessage(() => t().win(result.join(""), payout));
-
         }
 
-    }
-
-
-    /* =========================
-       VERLUST
-    ========================= */
-
-    else {
-
+    } else {
         setMessage(() => t().lose(result.join("")));
-
     }
 
+    // Aktuelles Guthaben
+    const currentBalance = CasinoBalance.get();
 
-    /* =========================
-       AKTUELLES GUTHABEN
-    ========================= */
-
-    const currentBalance =
-        CasinoBalance.get();
-
-
-    /* =========================
-       EINSATZ ANPASSEN
-    ========================= */
-
-    if (currentBalance > 0) {
-
-        let currentBet =
-            Number(betInput.value);
-
-        if (
-            !Number.isFinite(currentBet) ||
-            currentBet < 1
-        ) {
-            currentBet = 1;
-        }
-
-        if (currentBet > currentBalance) {
-            currentBet = currentBalance;
-        }
-
-        betInput.value = currentBet;
-
-    }
-
-
-    /* =========================
-       KEIN GUTHABEN
-    ========================= */
-
+    // Kein Guthaben mehr
     if (currentBalance <= 0) {
-
+        isSpinning = false;
         spinButton.disabled = true;
         betInput.disabled = false;
 
         setMessage(() => t().noBalance);
-
+        updateBetDisplay();
         return;
     }
 
+    // Einsatz anpassen
+    let currentBet = Math.floor(Number(betInput.value));
 
-    /* =========================
-       WIEDER FREIGEBEN
-    ========================= */
+    if (!Number.isFinite(currentBet) || currentBet < 1) {
+        currentBet = 1;
+    }
 
+    if (currentBet > currentBalance) {
+        currentBet = currentBalance;
+    }
+
+    betInput.value = currentBet;
+    updateBetDisplay();
+
+    // Wieder freigeben
+    isSpinning = false;
     spinButton.disabled = false;
     betInput.disabled = false;
-
 }
 
 
 /* =========================
-   SPIN BUTTON
+   EVENTS
 ========================= */
 
-spinButton.addEventListener(
-    "click",
-    spin
-);
+spinButton.addEventListener("click", spin);
+
+// Enter = Spin
+betInput.addEventListener("keydown", event => {
+    if (event.key === "Enter" && !spinButton.disabled) {
+        spin();
+    }
+});
+
+// Eingabekontrolle (Feld darf leer sein, damit man neu tippen kann)
+betInput.addEventListener("input", () => {
+
+    if (betInput.value === "") {
+        updateBetDisplay();
+        return;
+    }
+
+    let value = Math.floor(Number(betInput.value));
+
+    if (!Number.isFinite(value)) {
+        return;
+    }
+
+    value = Math.max(1, Math.min(value, CasinoBalance.get()));
+
+    betInput.value = value;
+    updateBetDisplay();
+});
 
 
 /* =========================
-   ENTER = SPIN
+   SYNC MIT balance.js
 ========================= */
 
-betInput.addEventListener(
-    "keydown",
-    event => {
+// Guthaben von außen geändert (z. B. /give money in der Konsole)
+window.addEventListener("balanceUpdate", () => {
+    if (isSpinning) return;
 
-        if (
-            event.key === "Enter" &&
-            !spinButton.disabled
-        ) {
-            spin();
+    const balance = CasinoBalance.get();
+    const wasEmpty = spinButton.disabled;
+
+    spinButton.disabled = balance <= 0;
+
+    if (balance > 0) {
+        const current = Math.floor(Number(betInput.value)) || 1;
+        betInput.value = Math.max(1, Math.min(current, balance));
+
+        if (wasEmpty) {
+            setMessage(() => t().welcome);
         }
-
     }
-);
 
+    updateBetDisplay();
+});
 
-/* =========================
-   EINGABE KONTROLLE
-========================= */
-
-betInput.addEventListener(
-    "input",
-    () => {
-
-        const currentBalance =
-            CasinoBalance.get();
-
-        let value =
-            Number(betInput.value);
-
-        if (!Number.isFinite(value)) {
-            return;
-        }
-
-        value = Math.floor(value);
-
-        if (value < 1) {
-            value = 1;
-        }
-
-        if (value > currentBalance) {
-            value = currentBalance;
-        }
-
-        betInput.value = value;
-
+// Sprache in einem anderen Tab geändert
+window.addEventListener("storage", event => {
+    if (event.key === "casino_lang") {
+        applyLanguage();
     }
-);
+});
 
 
 /* =========================
