@@ -40,7 +40,6 @@ const translations = {
     de: {
         pageTitle: "SLOTMACHINE",
         info: "Info",
-        home: "Startseite",
         balance: "Guthaben",
         bet: "Einsatz",
         reels: "Walzen",
@@ -63,7 +62,6 @@ const translations = {
     en: {
         pageTitle: "SLOT MACHINE",
         info: "Info",
-        home: "Home",
         balance: "Balance",
         bet: "Bet",
         reels: "Reels",
@@ -107,7 +105,6 @@ function applyLanguage() {
     document.title = tr.pageTitle;
     $("title").textContent = tr.pageTitle;
     $("nav-info").textContent = tr.info;
-    $("nav-home").textContent = tr.home;
     $("lbl-balance").textContent = tr.balance;
     $("lbl-bet").textContent = tr.bet;
     $("lbl-reels").textContent = tr.reels;
@@ -127,6 +124,11 @@ function applyLanguage() {
 
     updateBalance();
     updateBetDisplay();
+}
+
+function setLanguage(lang){
+    CasinoLang.set(lang);
+    applyLanguage();
 }
 
 document.querySelectorAll(".lang-btn").forEach(btn => {

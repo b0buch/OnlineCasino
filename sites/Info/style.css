@@ -17,6 +17,7 @@
 body {
   background: linear-gradient(to bottom, #57018E, #200134);
   background-repeat: no-repeat;
+  background-size: cover;
   color: var(--text);
   min-height: 100vh;
   padding: 0;
@@ -195,6 +196,7 @@ footer {
   display: flex;
   align-items: center;
   justify-content: center;
+  margin-top: auto;
 }
 
 footer p {
