@@ -312,10 +312,18 @@ button:disabled {
   margin-top: 10px;
 }
 
+/* Footer */
 footer {
   background: linear-gradient(#462F65, #24003A);
-  height: 50px;
-  margin-top: auto;
+  min-height: 50px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+footer p {
+  color: var(--muted);
+  font-size: 0.9rem;
 }
 
 /* Handy */
